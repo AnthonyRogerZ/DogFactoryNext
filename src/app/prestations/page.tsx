@@ -271,8 +271,8 @@ export default function Prestations() {
               >
                 <div className="relative h-48 md:h-64 overflow-hidden">
                   <Image
-                    src="/images/pexels-photo-6816862.webp"
-                    alt="Épilation"
+                    src="/images/épilation/épilation.webp"
+                    alt="Épilation spécialisée"
                     fill
                     className="object-cover transform group-hover:scale-105 transition-transform duration-300"
                   />

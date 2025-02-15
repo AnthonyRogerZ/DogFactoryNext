@@ -3,7 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import { FaFacebookF, FaInstagram, FaTiktok, FaBone } from 'react-icons/fa'
-import { HiMenu, HiX } from 'react-icons/hi'
+import { HiX } from 'react-icons/hi'
+import { PiDog } from 'react-icons/pi'
 import { socialLinks } from '@/data/socialLinks';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -146,17 +147,17 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Menu Hamburger sur mobile */}
           <button
             ref={buttonRef}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-[#5B5F3D] focus:outline-none"
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+            aria-label="Toggle menu"
           >
-            <span className="sr-only">Open main menu</span>
             {isMenuOpen ? (
-              <HiX className="block h-6 w-6" />
+              <HiX className="w-6 h-6 text-gray-800" />
             ) : (
-              <HiMenu className="block h-6 w-6" />
+              <PiDog className="w-6 h-6 text-gray-800" />
             )}
           </button>
         </div>
@@ -171,25 +172,123 @@ export default function Header() {
             closed: { opacity: 0, height: 0, marginTop: 0 }
           }}
           transition={{ duration: 0.2 }}
-          className="lg:hidden overflow-hidden absolute top-full left-0 right-0 bg-white shadow-lg z-50"
+          className="lg:hidden overflow-hidden absolute top-full left-0 right-0 bg-gradient-to-b from-white to-[#f8f9f7] shadow-lg z-50"
         >
-          <div className="px-4 pt-2 pb-3 space-y-1">
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  pathname === item.href
-                  ? 'text-[#5B5F3D] bg-gray-50'
-                  : 'text-gray-700 hover:text-[#5B5F3D] hover:bg-gray-50'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
+          <div className="px-4 py-3 relative min-h-[300px]">
+            {/* Bulles décoratives */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {/* Bulles réparties partout */}
+              <div className="absolute inset-0">
+                {/* Première rangée */}
+                <div className="absolute top-[5%] left-[10%] w-6 h-6 rounded-full bg-[#5B5F3D] opacity-20 animate-float-slow"></div>
+                <div className="absolute top-[8%] left-[35%] w-4 h-4 rounded-full bg-[#5B5F3D] opacity-25 animate-float-medium-reverse"></div>
+                <div className="absolute top-[3%] left-[60%] w-5 h-5 rounded-full bg-[#5B5F3D] opacity-20 animate-float-fast"></div>
+                <div className="absolute top-[12%] left-[85%] w-3 h-3 rounded-full bg-[#5B5F3D] opacity-25 animate-float-slow-reverse"></div>
+                
+                {/* Deuxième rangée */}
+                <div className="absolute top-[25%] left-[15%] w-4 h-4 rounded-full bg-[#5B5F3D] opacity-20 animate-float-medium"></div>
+                <div className="absolute top-[28%] left-[40%] w-6 h-6 rounded-full bg-[#5B5F3D] opacity-25 animate-float-slow-reverse"></div>
+                <div className="absolute top-[22%] left-[65%] w-3 h-3 rounded-full bg-[#5B5F3D] opacity-20 animate-float-fast-reverse"></div>
+                <div className="absolute top-[30%] left-[90%] w-5 h-5 rounded-full bg-[#5B5F3D] opacity-25 animate-float-medium"></div>
+
+                {/* Troisième rangée */}
+                <div className="absolute top-[45%] left-[5%] w-5 h-5 rounded-full bg-[#5B5F3D] opacity-20 animate-float-fast"></div>
+                <div className="absolute top-[48%] left-[30%] w-3 h-3 rounded-full bg-[#5B5F3D] opacity-25 animate-float-slow"></div>
+                <div className="absolute top-[42%] left-[55%] w-6 h-6 rounded-full bg-[#5B5F3D] opacity-20 animate-float-medium-reverse"></div>
+                <div className="absolute top-[50%] left-[80%] w-4 h-4 rounded-full bg-[#5B5F3D] opacity-25 animate-float-fast-reverse"></div>
+
+                {/* Quatrième rangée */}
+                <div className="absolute top-[65%] left-[12%] w-3 h-3 rounded-full bg-[#5B5F3D] opacity-20 animate-float-medium"></div>
+                <div className="absolute top-[68%] left-[38%] w-5 h-5 rounded-full bg-[#5B5F3D] opacity-25 animate-float-fast"></div>
+                <div className="absolute top-[62%] left-[62%] w-4 h-4 rounded-full bg-[#5B5F3D] opacity-20 animate-float-slow-reverse"></div>
+                <div className="absolute top-[70%] left-[88%] w-6 h-6 rounded-full bg-[#5B5F3D] opacity-25 animate-float-medium-reverse"></div>
+
+                {/* Cinquième rangée */}
+                <div className="absolute top-[85%] left-[8%] w-4 h-4 rounded-full bg-[#5B5F3D] opacity-20 animate-float-fast-reverse"></div>
+                <div className="absolute top-[88%] left-[33%] w-6 h-6 rounded-full bg-[#5B5F3D] opacity-25 animate-float-medium"></div>
+                <div className="absolute top-[82%] left-[58%] w-3 h-3 rounded-full bg-[#5B5F3D] opacity-20 animate-float-slow"></div>
+                <div className="absolute top-[90%] left-[83%] w-5 h-5 rounded-full bg-[#5B5F3D] opacity-25 animate-float-fast"></div>
+              </div>
+            </div>
+
+            <div className="relative z-10 space-y-1">
+              {menuItems.map((item, index) => (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`relative block w-full px-5 py-4 rounded-xl text-[15px] font-medium transition-all duration-300 overflow-hidden backdrop-blur-sm ${
+                      pathname === item.href
+                        ? 'text-[#5B5F3D] bg-white/80 shadow-sm'
+                        : 'text-gray-600 hover:text-[#5B5F3D] hover:bg-white/60'
+                    }`}
+                  >
+                    <span className="relative z-10">{item.name}</span>
+                    {pathname === item.href && (
+                      <motion.div
+                        layoutId="activeBackground"
+                        className="absolute inset-0 bg-gradient-to-r from-[#5B5F3D]/10 to-[#5B5F3D]/5"
+                        initial={false}
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
+
+        <style jsx global>{`
+          @keyframes float-slow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+          }
+          @keyframes float-medium {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+          }
+          @keyframes float-fast {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+          }
+          @keyframes float-slow-reverse {
+            0%, 100% { transform: translateY(-10px); }
+            50% { transform: translateY(0px); }
+          }
+          @keyframes float-medium-reverse {
+            0%, 100% { transform: translateY(-15px); }
+            50% { transform: translateY(0px); }
+          }
+          @keyframes float-fast-reverse {
+            0%, 100% { transform: translateY(-8px); }
+            50% { transform: translateY(0px); }
+          }
+          .animate-float-slow {
+            animation: float-slow 6s ease-in-out infinite;
+          }
+          .animate-float-medium {
+            animation: float-medium 5s ease-in-out infinite;
+          }
+          .animate-float-fast {
+            animation: float-fast 4s ease-in-out infinite;
+          }
+          .animate-float-slow-reverse {
+            animation: float-slow-reverse 6s ease-in-out infinite;
+          }
+          .animate-float-medium-reverse {
+            animation: float-medium-reverse 5s ease-in-out infinite;
+          }
+          .animate-float-fast-reverse {
+            animation: float-fast-reverse 4s ease-in-out infinite;
+          }
+        `}</style>
+
       </div>
       <div className="h-px bg-gradient-to-r from-brand/40 via-brand to-brand/40 relative overflow-hidden">
         <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine"></div>
