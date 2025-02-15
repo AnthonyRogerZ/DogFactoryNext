@@ -5,8 +5,31 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Dog Factory - Salon de Toilettage",
-  description: "Votre salon de toilettage professionnel à Vaux-le-Pénil",
+  title: 'Dog Factory - Toilettage et Soins pour Chiens à Annecy',
+  description: 'Dog Factory, votre salon de toilettage professionnel à Annecy. Services de toilettage, soins et conseils pour le bien-être de votre chien.',
+  keywords: 'toilettage chien, salon toilettage annecy, dog factory, soins chiens, toiletteur professionnel',
+  openGraph: {
+    title: 'Dog Factory - Toilettage Professionnel à Annecy',
+    description: 'Salon de toilettage professionnel à Annecy. Services de qualité pour le bien-être de votre chien.',
+    url: 'https://www.dogfactory.fr',
+    siteName: 'Dog Factory',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  verification: {
+    google: 'N8NtUQMv6mSrDHa0PDv8cefv9Bv6R2zoM2Yb-308vvM',
+  },
+  alternates: {
+    canonical: 'https://www.dogfactory.fr',
+  },
 };
 
 export default function RootLayout({
