@@ -6,13 +6,11 @@ import Hero from '@/components/Hero'
 // Enregistrement des modifications.
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="flex-grow">
       <Header />
-      <Hero />
-      <div className="flex-grow container mx-auto px-4 py-8 mt-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <Hero />
         <Description />
-        <div className="my-8">
-        </div>
       </div>
       <Footer />
     </main>

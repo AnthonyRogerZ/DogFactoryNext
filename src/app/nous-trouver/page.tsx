@@ -258,7 +258,7 @@ export default function Location() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <img src="https://www.waze.com/website/assets/favicon-192x192.png" alt="Waze" className="w-4 h-4 md:w-5 md:h-5" />
+                  <img src="/images/waze/icons8-waze-48.png" alt="Waze" className="w-4 h-4 md:w-5 md:h-5" />
                   Waze
                 </motion.a>
               </div>
@@ -268,7 +268,7 @@ export default function Location() {
 
         {/* Main Content */}
         <section className="py-8 md:py-12">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12">
                 {/* Map */}
@@ -515,7 +515,7 @@ export default function Location() {
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="px-4 py-1.5 rounded-lg bg-white/80 backdrop-blur-sm font-medium text-brand shadow-sm">
-                            10h00 – 16h00
+                            9h00 – 17h00
                           </span>
                         </div>
                       </div>

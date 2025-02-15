@@ -12,8 +12,8 @@ export default function Hero() {
         <div className="absolute top-40 right-20 w-56 sm:w-72 h-56 sm:h-72 bg-[#8B4513]/10 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-4 pt-4 sm:pt-6 lg:pt-8">
-        <div className="flex flex-col lg:flex-row items-center max-w-4xl mx-auto gap-4">
+      <div className="container mx-auto px-4 pt-2 sm:pt-6 lg:pt-8">
+        <div className="flex flex-col lg:flex-row items-center max-w-4xl mx-auto gap-2 md:gap-4">
           {/* Section texte */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -51,11 +51,11 @@ export default function Hero() {
               <span className="text-[#5B5F3D] font-medium text-sm">✨ Un accueil chaleureux vous attend</span>
             </motion.div>
 
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-sm sm:text-base md:text-lg text-gray-600 mb-6 max-w-xl"
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-gray-600 mb-6 max-w-lg mx-auto lg:mx-0"
             >
               Découvrez notre salon où chaque visite est une expérience unique. 
               Rencontrez Léon, notre mascotte, et laissez-nous prendre soin de votre compagnon.
@@ -64,22 +64,20 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-6 lg:mb-0"
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
             >
-              <Link href="/contact">
-                <button className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 bg-[#5B5F3D] text-white rounded-full font-medium 
-                  hover:bg-[#4A4E2F] transform hover:scale-105 transition-all duration-300 
-                  shadow-lg hover:shadow-xl text-sm sm:text-base">
-                  Prendre RDV
-                </button>
+              <Link 
+                href="/contact"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#5B5F3D] hover:bg-[#5B5F3D]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5B5F3D] transition-all duration-300"
+              >
+                Prendre RDV
               </Link>
-              <Link href="/prestations">
-                <button className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-[#5B5F3D] rounded-full font-medium 
-                  border-2 border-[#5B5F3D] hover:bg-[#5B5F3D] hover:text-white
-                  transform hover:scale-105 transition-all duration-300 text-sm sm:text-base">
-                  Nos Prestations
-                </button>
+              <Link 
+                href="/nos-prestations"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-[#5B5F3D] text-base font-medium rounded-md text-[#5B5F3D] hover:bg-[#5B5F3D]/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5B5F3D] transition-all duration-300"
+              >
+                Nos Prestations
               </Link>
             </motion.div>
           </motion.div>
@@ -89,7 +87,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="relative w-[240px] sm:w-[280px] md:w-[300px] lg:w-[320px] mt-2 lg:mt-0 lg:-mr-8"
+            className="relative w-[240px] sm:w-[280px] md:w-[300px] lg:w-[320px] mt-0 lg:mt-0 lg:-mr-8"
           >
             {/* Cercle décoratif derrière Léon */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#5B5F3D]/20 to-[#8B4513]/20 
