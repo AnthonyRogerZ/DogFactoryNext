@@ -49,8 +49,34 @@ export default function Prestations() {
         }
         const data = await response.json()
         console.log('Received reviews:', data.reviews) // Debug log
-        if (data.reviews) {
+        if (data.reviews && data.reviews.length > 0) {
           setReviews(data.reviews)
+        } else {
+          // Fallback to mock reviews only if no Google reviews are available
+          const mockReviews: GoogleReview[] = [
+            {
+              author_name: "Marie Dupont",
+              rating: 5,
+              text: "Excellent toilettage pour mon Bichon. L'équipe est très professionnelle et attentionnée. Je recommande vivement !",
+              time: new Date().getTime(),
+              profile_photo_url: "/images/reviews/avatar1.jpg"
+            },
+            {
+              author_name: "Thomas Martin",
+              rating: 5,
+              text: "Service impeccable ! Mon Golden en ressort toujours magnifique. Le personnel est aux petits soins avec les animaux.",
+              time: new Date().getTime(),
+              profile_photo_url: "/images/reviews/avatar2.jpg"
+            },
+            {
+              author_name: "Sophie Bernard",
+              rating: 5,
+              text: "Très satisfaite du service. Mon chien est toujours heureux d'y aller, c'est un gage de qualité !",
+              time: new Date().getTime(),
+              profile_photo_url: "/images/reviews/avatar3.jpg"
+            }
+          ];
+          setReviews(mockReviews);
         }
       } catch (error) {
         console.error('Error fetching reviews:', error)
@@ -60,32 +86,6 @@ export default function Prestations() {
       }
     }
 
-    // Simulated reviews data
-    const mockReviews: GoogleReview[] = [
-      {
-        author_name: "Marie Dupont",
-        rating: 5,
-        text: "Excellent toilettage pour mon Bichon. L'équipe est très professionnelle et attentionnée. Je recommande vivement !",
-        time: new Date().getTime(),
-        profile_photo_url: "/images/reviews/avatar1.jpg"
-      },
-      {
-        author_name: "Thomas Martin",
-        rating: 5,
-        text: "Service impeccable ! Mon Golden en ressort toujours magnifique. Le personnel est aux petits soins avec les animaux.",
-        time: new Date().getTime(),
-        profile_photo_url: "/images/reviews/avatar2.jpg"
-      },
-      {
-        author_name: "Sophie Bernard",
-        rating: 5,
-        text: "Très satisfaite du service. Mon chien est toujours heureux d'y aller, c'est un gage de qualité !",
-        time: new Date().getTime(),
-        profile_photo_url: "/images/reviews/avatar3.jpg"
-      }
-    ];
-
-    setReviews(mockReviews);
     fetchReviews()
   }, [])
 
