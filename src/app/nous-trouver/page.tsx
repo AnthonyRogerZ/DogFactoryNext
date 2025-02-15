@@ -420,6 +420,20 @@ export default function Location() {
             </div>
           </div>
         </section>
+
+        {/* Call to Action - Mobile Optimized */}
+        <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 border border-gray-100">
+          <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">
+            Besoin d'un rendez-vous rapidement ?
+          </h3>
+          <a
+            href="tel:0658166105"
+            className="inline-flex items-center gap-2 md:gap-3 text-sm md:text-base font-medium text-brand hover:text-brand/90 transition-colors"
+          >
+            <FaPhone className="w-4 h-4 md:w-5 md:h-5" />
+            Appelez-nous au 06 58 16 61 05
+          </a>
+        </div>
       </main>
       <Footer />
     </>
