@@ -35,7 +35,7 @@ interface GoogleReview {
 export default function Prestations() {
   const [mounted, setMounted] = useState(false)
   const [googleReviews, setGoogleReviews] = useState<GoogleReview[]>([])
-  const [reviews, setReviews] = useState([])
+  const [reviews, setReviews] = useState<GoogleReview[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -60,6 +60,32 @@ export default function Prestations() {
       }
     }
 
+    // Simulated reviews data
+    const mockReviews: GoogleReview[] = [
+      {
+        author_name: "Marie Dupont",
+        rating: 5,
+        text: "Excellent toilettage pour mon Bichon. L'équipe est très professionnelle et attentionnée. Je recommande vivement !",
+        time: new Date().getTime(),
+        profile_photo_url: "/images/reviews/avatar1.jpg"
+      },
+      {
+        author_name: "Thomas Martin",
+        rating: 5,
+        text: "Service impeccable ! Mon Golden en ressort toujours magnifique. Le personnel est aux petits soins avec les animaux.",
+        time: new Date().getTime(),
+        profile_photo_url: "/images/reviews/avatar2.jpg"
+      },
+      {
+        author_name: "Sophie Bernard",
+        rating: 5,
+        text: "Très satisfaite du service. Mon chien est toujours heureux d'y aller, c'est un gage de qualité !",
+        time: new Date().getTime(),
+        profile_photo_url: "/images/reviews/avatar3.jpg"
+      }
+    ];
+
+    setReviews(mockReviews);
     fetchReviews()
   }, [])
 
