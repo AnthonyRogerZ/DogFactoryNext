@@ -11,35 +11,43 @@ export async function GET() {
       throw new Error('Google Places API key is not configured');
     }
 
-    console.log('Fetching reviews with API key:', API_KEY.substring(0, 10) + '...');
+    console.log('Starting Google Places API request...');
+    console.log('Place ID:', PLACE_ID);
+    console.log('API Key (first 10 chars):', API_KEY.substring(0, 10) + '...');
     
     // First, get the place details
-    const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&fields=name,rating,reviews,user_ratings_total&key=${API_KEY}`;
+    const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&key=${API_KEY}`;
     console.log('Request URL:', detailsUrl);
 
     const response = await fetch(detailsUrl, {
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
-      next: { revalidate: 3600 } // Revalidate every hour
+      cache: 'no-store'
     });
+
+    console.log('Response status:', response.status);
+    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
 
     if (!response.ok) {
       const errorText = await response.text();
       console.error('API Response error:', errorText);
-      throw new Error('Failed to fetch reviews');
+      throw new Error(`Failed to fetch reviews: ${response.status} ${errorText}`);
     }
 
     const data = await response.json();
-    console.log('API Response:', JSON.stringify(data, null, 2));
+    console.log('Raw API Response:', JSON.stringify(data, null, 2));
     
     if (!data.result) {
-      console.error('No result in API response');
+      console.error('No result in API response:', data);
       throw new Error('Invalid API response format');
     }
 
     // Récupérer et trier les avis par date
     const reviews = data.result.reviews || [];
+    console.log('Number of reviews found:', reviews.length);
     reviews.sort((a, b) => b.time - a.time);
 
     const formattedReviews = reviews.map(review => ({
@@ -62,6 +70,9 @@ export async function GET() {
     });
   } catch (error) {
     console.error('Error fetching Google reviews:', error);
-    return NextResponse.json({ reviews: [] });
+    return NextResponse.json({ 
+      error: error.message,
+      reviews: [] 
+    });
   }
 }
