@@ -50,8 +50,10 @@ export default function Prestations() {
         const data = await response.json()
         console.log('Received reviews:', data.reviews) // Debug log
         if (data.reviews && data.reviews.length > 0) {
+          setGoogleReviews(data.reviews)
           setReviews(data.reviews)
         } else {
+          console.log('No Google reviews available, using mock reviews')
           // Fallback to mock reviews only if no Google reviews are available
           const mockReviews: GoogleReview[] = [
             {
@@ -472,7 +474,8 @@ export default function Prestations() {
                           <Image
                             src={review.profile_photo_url || "/images/default-avatar.png"}
                             alt={review.author_name}
-                            fill
+                            width={48}
+                            height={48}
                             className="rounded-full object-cover"
                           />
                         </div>
