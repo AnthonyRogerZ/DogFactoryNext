@@ -2,9 +2,14 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { FaPaw, FaHeart, FaCut, FaShower, FaCheck, FaStar, FaGoogle, FaMapMarkerAlt, FaPhone } from 'react-icons/fa'
+import { FaPaw, FaHeart, FaCut, FaShower, FaCheck, FaStar, FaGoogle, FaMapMarkerAlt, FaPhone, FaUser } from 'react-icons/fa'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/autoplay'
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -23,29 +28,39 @@ interface GoogleReview {
   rating: number;
   text: string;
   time: number;
+  profile_photo_url: string;
 }
 
 export default function Prestations() {
   const [mounted, setMounted] = useState(false)
   const [googleReviews, setGoogleReviews] = useState<GoogleReview[]>([])
+  const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     setMounted(true)
-    fetchGoogleReviews()
-  }, [])
-
-  const fetchGoogleReviews = async () => {
-    try {
-      const response = await fetch('/api/google-reviews')
-      const data = await response.json()
-      setGoogleReviews(data.reviews)
-    } catch (error) {
-      console.error('Erreur lors de la récupération des avis Google:', error)
-    } finally {
-      setLoading(false)
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch('/api/google-reviews')
+        if (!response.ok) {
+          throw new Error('Failed to fetch reviews')
+        }
+        const data = await response.json()
+        console.log('Received reviews:', data.reviews) // Debug log
+        if (data.reviews) {
+          setReviews(data.reviews)
+        }
+      } catch (error) {
+        console.error('Error fetching reviews:', error)
+        setError(error.message)
+      } finally {
+        setLoading(false)
+      }
     }
-  }
+
+    fetchReviews()
+  }, [])
 
   if (!mounted) return null
 
@@ -385,75 +400,115 @@ export default function Prestations() {
               </h2>
             </motion.div>
 
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Carte Google */}
-                <div className="aspect-[4/3] w-full">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2634.0893624631297!2d2.663955376941681!3d48.52693177917145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e5f47fb48f452d%3A0xdfc0f01eaf2eaaaa!2sDog&#39;Factory!5e0!3m2!1sfr!2sfr!4v1707929433889!5m2!1sfr!2sfr"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="rounded-2xl shadow-lg"
-                  ></iframe>
+            <div className="max-w-4xl mx-auto px-4 sm:px-6">
+              {loading && (
+                <div className="text-center py-8">
+                  <p className="text-gray-600">Chargement des avis...</p>
                 </div>
+              )}
+              
+              {!loading && reviews.length === 0 && (
+                <div className="text-center py-8">
+                  <p className="text-gray-600">Aucun avis disponible pour le moment.</p>
+                </div>
+              )}
 
-                {/* Informations */}
-                <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-16 h-16 relative">
-                      <Image
-                        src="/images/logo.png"
-                        alt="Dog'Factory Logo"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold">Dog'Factory</h3>
-                      <p className="text-gray-600">Toiletteur à Vaux-le-Pénil</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4 mb-6">
-                    <div className="flex items-center gap-2">
-                      <FaMapMarkerAlt className="text-[#4285F4] w-5 h-5" />
-                      <a 
-                        href="https://maps.google.com/?q=Dog'Factory,+79+Rue+de+la+Baste,+77000+Vaux-le-Pénil"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#4285F4] hover:underline"
-                      >
-                        79 Rue de la Baste, 77000 Vaux-le-Pénil
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FaPhone className="text-[#4285F4] w-5 h-5" />
-                      <a 
-                        href="tel:0658166105"
-                        className="text-[#4285F4] hover:underline"
-                      >
-                        06 58 16 61 05
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-4">
+              {/* Reviews Carousel */}
+              {!loading && reviews.length > 0 && (
+                <div className="mb-12">
+                  <Swiper
+                    modules={[Autoplay, Pagination]}
+                    spaceBetween={20}
+                    slidesPerView={1}
+                    autoplay={{
+                      delay: 5000,
+                      disableOnInteraction: false,
+                    }}
+                    pagination={{
+                      clickable: true,
+                      bulletActiveClass: 'swiper-pagination-bullet-active bg-brand',
+                    }}
+                    breakpoints={{
+                      640: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                      },
+                    }}
+                    className="pb-12"
+                  >
+                    {reviews.map((review, index) => (
+                      <SwiperSlide key={index}>
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="bg-white p-4 sm:p-6 rounded-xl shadow-md h-full flex flex-col"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                              {review.profile_photo_url ? (
+                                <Image
+                                  src={review.profile_photo_url}
+                                  alt={review.author_name}
+                                  width={48}
+                                  height={48}
+                                  className="rounded-full w-full h-full object-cover"
+                                />
+                              ) : (
+                                <FaUser className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
+                              )}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between mb-1 sm:mb-2">
+                                <h4 className="font-medium text-gray-900 text-sm sm:text-base truncate">{review.author_name}</h4>
+                                <span className="text-xs sm:text-sm text-gray-500">
+                                  {new Date(review.time * 1000).toLocaleDateString()}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1 mb-2">
+                                {[...Array(5)].map((_, i) => (
+                                  <FaStar
+                                    key={i}
+                                    className={`w-3 h-3 sm:w-4 sm:h-4 ${
+                                      i < review.rating ? 'text-yellow-400' : 'text-gray-200'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                              <p className="text-gray-600 text-xs sm:text-sm line-clamp-4">{review.text}</p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                  
+                  <div className="text-center mt-8 space-y-4">
                     <a
                       href="https://g.page/r/CeWJXZjJlxoyEAE/review"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#4285F4] text-white rounded-full hover:bg-[#3367D6] transition-colors w-full"
+                      className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#4285F4] text-white text-sm sm:text-base rounded-full hover:bg-[#3367D6] transition-colors"
                     >
-                      <FaGoogle />
+                      <FaGoogle className="text-lg sm:text-xl" />
                       <span>Laisser un avis</span>
                     </a>
+                    <div>
+                      <a
+                        href="https://search.google.com/local/reviews?placeid=ChIJgwPkdMjx5UcR5YldmMmXGjI"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-brand hover:text-brand/80 transition-colors mt-4 text-sm sm:text-base"
+                      >
+                        <span>Voir tous les avis sur Google</span>
+                        <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </section>
