@@ -130,14 +130,14 @@ export default function ContactForm() {
           id="message"
           name="message"
           required
-          rows={3}
+          rows={4}
           value={formData.message}
           onChange={handleChange}
           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand text-sm"
         />
       </div>
 
-      <div className="flex justify-center transform scale-90 md:scale-100 origin-center">
+      <div className="flex justify-center">
         <ReCAPTCHA
           ref={recaptchaRef}
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
