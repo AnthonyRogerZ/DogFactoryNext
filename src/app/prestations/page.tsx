@@ -457,67 +457,6 @@ export default function Prestations() {
             </div>
           </div>
         </section>
-
-        {/* Testimonials Section */}
-        <section className="py-12 md:py-16">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="max-w-3xl mx-auto text-center mb-12"
-            >
-              <Badge>Témoignages</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-6">
-                Ce que disent nos clients
-              </h2>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  name: "Marie L.",
-                  dog: "Luna",
-                  text: "Une équipe formidable qui prend vraiment soin de nos compagnons. Luna est toujours détendue et magnifique après son passage.",
-                  rating: 5
-                },
-                {
-                  name: "Thomas B.",
-                  dog: "Max",
-                  text: "Max est un chien anxieux, mais ici il est entre de bonnes mains. Le personnel est patient et attentionné.",
-                  rating: 5
-                },
-                {
-                  name: "Sophie D.",
-                  dog: "Oscar",
-                  text: "Je recommande vivement ! Un travail de qualité et un véritable souci du bien-être animal.",
-                  rating: 5
-                }
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-white rounded-2xl shadow-lg p-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="flex items-center gap-2 mb-4">
-                    {Array.from({ length: item.rating }).map((_, i) => (
-                      <FaHeart key={i} className="text-brand w-4 h-4" />
-                    ))}
-                  </div>
-                  <p className="text-gray-700 mb-4 italic">"{item.text}"</p>
-                  <div className="flex items-center justify-between text-sm text-gray-600">
-                    <span className="font-medium">{item.name}</span>
-                    <span>et {item.dog}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
       </main>
       <Footer />
     </>

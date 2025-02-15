@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { FaFacebookF, FaInstagram, FaTiktok, FaBone } from 'react-icons/fa'
 import { HiMenu, HiX } from 'react-icons/hi'
+import { socialLinks } from '@/data/socialLinks';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -37,30 +38,6 @@ export default function Header() {
     { name: 'Où Nous Trouver', href: '/nous-trouver' },
   ]
 
-  const socialLinks = [
-    { 
-      icon: FaFacebookF, 
-      href: 'https://facebook.com', 
-      label: 'Facebook',
-      color: '#1877F2',
-      hoverColor: '#0b5fcc'
-    },
-    { 
-      icon: FaInstagram, 
-      href: 'https://instagram.com', 
-      label: 'Instagram',
-      color: '#E4405F',
-      hoverColor: '#d32d4b'
-    },
-    { 
-      icon: FaTiktok, 
-      href: 'https://tiktok.com', 
-      label: 'TikTok',
-      color: '#000000',
-      hoverColor: '#333333'
-    },
-  ]
-
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled ? 'bg-white/80 backdrop-blur-lg shadow-sm' : 'bg-white/60 backdrop-blur-md'
@@ -84,7 +61,7 @@ export default function Header() {
           </Link>
 
           {/* RS sur mobile */}
-          <div className="flex items-center gap-4 lg:hidden">
+          <div className="flex justify-center space-x-4 lg:hidden">
             {socialLinks.map((social) => (
               <Link
                 key={social.label}
@@ -120,7 +97,7 @@ export default function Header() {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
-            <div className="flex items-center space-x-4 pl-4 border-l border-brand/20">
+            <div className="flex justify-center space-x-4 pl-4 border-l border-brand/20">
               {socialLinks.map((social) => (
                 <Link
                   key={social.label}

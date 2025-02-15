@@ -1,30 +1,8 @@
 // Enregistrement des modifications.
 import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa';
+import { socialLinks } from '@/data/socialLinks';
 import SocialLinks from './SocialLinks';
-
-const socialLinks = [
-  { 
-    icon: FaFacebookF, 
-    href: 'https://facebook.com', 
-    label: 'Facebook',
-    color: '#1877F2',
-    hoverColor: '#0b5fcc'
-  },
-  { 
-    icon: FaInstagram, 
-    href: 'https://instagram.com', 
-    label: 'Instagram',
-    color: '#E4405F',
-    hoverColor: '#d32d4b'
-  },
-  { 
-    icon: FaTiktok, 
-    href: 'https://tiktok.com', 
-    label: 'TikTok',
-    color: '#000000',
-    hoverColor: '#333333'
-  },
-];
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -65,14 +43,50 @@ export default function Footer() {
               />
             </div>
             <div className="hidden md:block">
-              <SocialLinks />
+              <div className="flex items-center justify-center space-x-6">
+                {socialLinks.map((social) => (
+                  <Link
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full transition-all duration-300 group relative hover:-translate-y-0.5"
+                    aria-label={social.label}
+                    style={{ color: social.color }}
+                  >
+                    <social.icon className="w-4 h-4 relative z-10 group-hover:animate-neon" />
+                    <span className="absolute inset-0 rounded-full opacity-0 transition-all duration-300 group-hover:opacity-20 blur-sm group-hover:animate-neon"
+                          style={{ backgroundColor: social.color }}></span>
+                    <span className="absolute inset-0 rounded-full opacity-0 transition-all duration-300 group-hover:opacity-10"
+                          style={{ backgroundColor: social.color }}></span>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Social Media sur mobile uniquement */}
         <div className="md:hidden flex justify-center border-t border-gray-300 mt-6 pt-6">
-          <SocialLinks />
+          <div className="flex items-center justify-center space-x-6">
+            {socialLinks.map((social) => (
+              <Link
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full transition-all duration-300 group relative hover:-translate-y-0.5"
+                aria-label={social.label}
+                style={{ color: social.color }}
+              >
+                <social.icon className="w-4 h-4 relative z-10 group-hover:animate-neon" />
+                <span className="absolute inset-0 rounded-full opacity-0 transition-all duration-300 group-hover:opacity-20 blur-sm group-hover:animate-neon"
+                      style={{ backgroundColor: social.color }}></span>
+                <span className="absolute inset-0 rounded-full opacity-0 transition-all duration-300 group-hover:opacity-10"
+                      style={{ backgroundColor: social.color }}></span>
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Bottom Section */}
