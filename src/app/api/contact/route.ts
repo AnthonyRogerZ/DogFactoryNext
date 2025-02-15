@@ -95,13 +95,27 @@ export async function POST(request: Request) {
       `,
     };
 
-    console.log('Attempting to send email...');
-    
+    console.log('Email configuration:', {
+      to: msg.to,
+      from: msg.from,
+      subject: msg.subject
+    });
+
     try {
-      const result = await sgMail.send(msg);
-      console.log('Email sent successfully:', result);
+      console.log('Attempting to send email via SendGrid...');
+      const [response] = await sgMail.send(msg);
+      console.log('SendGrid Response:', {
+        statusCode: response?.statusCode,
+        headers: response?.headers,
+        body: response?.body
+      });
     } catch (error: any) {
-      console.error('SendGrid error:', error.response?.body);
+      console.error('SendGrid detailed error:', {
+        message: error.message,
+        response: error.response?.body,
+        code: error.code,
+        stack: error.stack
+      });
       throw error;
     }
 
