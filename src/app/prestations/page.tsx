@@ -44,11 +44,16 @@ export default function Prestations() {
     const fetchReviews = async () => {
       try {
         const response = await fetch('/api/google-reviews')
+        const text = await response.text()
+        console.log('Raw API Response:', text)
+        
         if (!response.ok) {
-          throw new Error('Failed to fetch reviews')
+          throw new Error(`Failed to fetch reviews: ${response.status} ${text}`)
         }
-        const data = await response.json()
-        console.log('Received reviews:', data.reviews) // Debug log
+        
+        const data = JSON.parse(text)
+        console.log('Parsed reviews:', data)
+        
         if (data.reviews && data.reviews.length > 0) {
           setGoogleReviews(data.reviews)
           setReviews(data.reviews)

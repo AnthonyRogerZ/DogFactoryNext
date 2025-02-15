@@ -5,49 +5,72 @@ const PLACE_ID = 'ChIJgwPkdMjx5UcR5YldmMmXGjI'; // Dog Factory Place ID
 export async function GET() {
   try {
     const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
+    console.log('Starting API request...');
     
     if (!API_KEY) {
       console.error('API key is missing');
-      throw new Error('Google Places API key is not configured');
+      return NextResponse.json({ 
+        error: 'Google Places API key is not configured',
+        reviews: [],
+        debug: {
+          hasApiKey: false,
+          solution: 'Add GOOGLE_PLACES_API_KEY to your .env file'
+        }
+      }, { status: 500 });
     }
 
-    console.log('Starting Google Places API request...');
-    console.log('Place ID:', PLACE_ID);
-    console.log('API Key (first 10 chars):', API_KEY.substring(0, 10) + '...');
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&fields=name,rating,reviews,user_ratings_total&key=${API_KEY}`;
     
-    // First, get the place details
-    const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&key=${API_KEY}`;
-    console.log('Request URL:', detailsUrl);
-
-    const response = await fetch(detailsUrl, {
-      method: 'GET',
+    const response = await fetch(url, {
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
       },
       cache: 'no-store'
     });
 
-    console.log('Response status:', response.status);
-    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('API Response error:', errorText);
-      throw new Error(`Failed to fetch reviews: ${response.status} ${errorText}`);
+    const responseData = await response.text();
+    let data;
+    
+    try {
+      data = JSON.parse(responseData);
+    } catch (e) {
+      console.error('Failed to parse JSON response:', e);
+      return NextResponse.json({ 
+        error: 'Invalid JSON response from Google API',
+        reviews: [],
+        debug: {
+          rawResponse: responseData,
+          solution: 'Check if the API response is valid JSON'
+        }
+      }, { status: 500 });
     }
 
-    const data = await response.json();
-    console.log('Raw API Response:', JSON.stringify(data, null, 2));
-    
-    if (!data.result) {
+    if (data.status === 'REQUEST_DENIED') {
+      console.error('API request denied:', data.error_message);
+      return NextResponse.json({ 
+        error: 'Google Places API request denied',
+        reviews: [],
+        debug: {
+          googleError: data.error_message,
+          solution: 'Your API key has referer restrictions that are not compatible with this API. Go to Google Cloud Console > APIs & Services > Credentials and either:\n1. Remove the referer restrictions\n2. Use IP restrictions instead\n3. Create a new API key without referer restrictions'
+        }
+      }, { status: 403 });
+    }
+
+    if (!data || !data.result) {
       console.error('No result in API response:', data);
-      throw new Error('Invalid API response format');
+      return NextResponse.json({ 
+        error: 'Invalid API response format',
+        reviews: [],
+        debug: {
+          data,
+          solution: 'Ensure that the Place ID is correct and the API key has access to the Places API'
+        }
+      }, { status: 500 });
     }
 
     // Récupérer et trier les avis par date
     const reviews = data.result.reviews || [];
-    console.log('Number of reviews found:', reviews.length);
     reviews.sort((a, b) => b.time - a.time);
 
     const formattedReviews = reviews.map(review => ({
@@ -57,8 +80,6 @@ export async function GET() {
       time: review.time,
       profile_photo_url: review.profile_photo_url
     }));
-
-    console.log('Formatted reviews:', formattedReviews);
 
     return NextResponse.json({ 
       reviews: formattedReviews,
@@ -71,8 +92,13 @@ export async function GET() {
   } catch (error) {
     console.error('Error fetching Google reviews:', error);
     return NextResponse.json({ 
-      error: error.message,
-      reviews: [] 
-    });
+      error: 'Failed to fetch Google reviews',
+      reviews: [],
+      debug: {
+        hasApiKey: !!process.env.GOOGLE_PLACES_API_KEY,
+        error: error.toString(),
+        solution: 'Check the error details and make sure your API key and Place ID are correct'
+      }
+    }, { status: 500 });
   }
 }
