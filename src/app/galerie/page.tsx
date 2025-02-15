@@ -59,9 +59,9 @@ export default function Gallery() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gradient-to-b from-brand/5 via-white to-gray-50 pt-16 md:pt-20">
+      <main className="min-h-screen bg-gradient-to-b from-brand/5 via-white to-gray-50 pt-[72px] sm:pt-[80px]">
         {/* Hero Section */}
-        <section className="relative py-6 md:py-10 overflow-hidden">
+        <section className="py-4 sm:py-6 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-brand/10 to-transparent"></div>
           <div className="container mx-auto px-4 relative">
             <div className="max-w-4xl mx-auto text-center">
@@ -167,7 +167,7 @@ export default function Gallery() {
         </section>
 
         {/* Salon Photos */}
-        <section className="py-6 md:py-10 relative">
+        <section className="py-4 sm:py-6 relative">
           <div className="container mx-auto px-4">
             <motion.div
               className="max-w-xl mx-auto text-center mb-4 md:mb-6"
@@ -228,7 +228,7 @@ export default function Gallery() {
         </section>
 
         {/* Before/After Section */}
-        <section className="py-6 md:py-10 bg-gradient-to-b from-gray-50 to-white relative">
+        <section className="py-4 sm:py-6 bg-gradient-to-b from-white to-brand/5 relative">
           <div className="container mx-auto px-4">
             <motion.div
               className="max-w-xl mx-auto text-center mb-4 md:mb-6"
@@ -287,7 +287,7 @@ export default function Gallery() {
         </section>
 
         {/* Call to Action */}
-        <section className="py-12 md:py-16 bg-gray-50">
+        <section className="py-4 sm:py-6 bg-gray-50">
           <div className="container mx-auto px-4">
             <motion.div
               className="max-w-3xl mx-auto text-center"
