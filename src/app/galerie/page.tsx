@@ -61,7 +61,7 @@ export default function Gallery() {
       <Header />
       <main className="min-h-screen bg-gradient-to-b from-brand/5 via-white to-gray-50 pt-16 md:pt-20">
         {/* Hero Section */}
-        <section className="relative py-12 md:py-16 overflow-hidden">
+        <section className="relative py-6 md:py-8 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-brand/10 to-transparent"></div>
           <div className="container mx-auto px-4 relative">
             <div className="max-w-4xl mx-auto text-center">
@@ -69,7 +69,7 @@ export default function Gallery() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="relative inline-block mb-8"
+                className="relative inline-block mb-6"
               >
                 <motion.div 
                   className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-brand/20 to-brand/5 rounded-full flex items-center justify-center mx-auto relative overflow-hidden"
@@ -167,15 +167,15 @@ export default function Gallery() {
         </section>
 
         {/* Salon Photos */}
-        <section className="py-12 md:py-16 relative">
+        <section className="py-6 md:py-8 relative">
           <div className="container mx-auto px-4">
             <motion.div
-              className="max-w-xl mx-auto text-center mb-10 md:mb-12"
+              className="max-w-xl mx-auto text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-xl md:text-3xl font-bold text-brand mb-4">Notre Salon Dog'Factory</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-brand mb-2">Notre Salon Dog'Factory</h2>
               <p className="text-sm md:text-base text-gray-600">Un espace moderne et confortable pour votre compagnon</p>
             </motion.div>
             <motion.div
@@ -228,15 +228,15 @@ export default function Gallery() {
         </section>
 
         {/* Before/After Section */}
-        <section className="py-12 md:py-16 bg-gradient-to-b from-white to-brand/5 relative">
+        <section className="py-6 md:py-8 bg-gradient-to-b from-white to-brand/5 relative">
           <div className="container mx-auto px-4">
             <motion.div
-              className="max-w-xl mx-auto text-center mb-10 md:mb-12"
+              className="max-w-xl mx-auto text-center mb-6 md:mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-xl md:text-3xl font-bold text-brand mb-4">Nos Réalisations</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-brand mb-2">Nos Réalisations</h2>
               <p className="text-sm md:text-base text-gray-600">Découvrez les transformations réalisées dans notre salon</p>
             </motion.div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
@@ -287,7 +287,7 @@ export default function Gallery() {
         </section>
 
         {/* Call to Action */}
-        <section className="py-12 md:py-16 bg-gray-50">
+        <section className="py-6 md:py-8 bg-gray-50">
           <div className="container mx-auto px-4">
             <motion.div
               className="max-w-3xl mx-auto text-center"
