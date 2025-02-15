@@ -6,10 +6,11 @@ import { FaPaw, FaHeart, FaCut, FaShower, FaCheck, FaStar, FaGoogle, FaMapMarker
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination } from 'swiper/modules'
+import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
+import 'swiper/css/navigation'
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -67,29 +68,29 @@ export default function Prestations() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white pt-16 md:pt-20">
+      <main className="min-h-screen bg-white pt-16 md:pt-16">
         {/* Hero Section */}
-        <section className="relative py-12 md:py-20 bg-gradient-to-b from-brand/5 to-white">
+        <section className="relative py-6 md:py-10 bg-gradient-to-b from-brand/5 to-white">
           <div className="container mx-auto px-4">
             <motion.div 
-              className="max-w-4xl mx-auto text-center"
+              className="max-w-3xl mx-auto text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
               <Badge>Votre bien-être est notre priorité 🐾</Badge>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mt-6 mb-6">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mt-4 mb-4">
                 Nos Prestations de Toilettage Canin
               </h1>
-              <p className="text-base md:text-lg text-gray-700 mb-4 leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 mb-3 md:mb-4 leading-relaxed">
                 Lors du toilettage canin, nous transformons cette expérience en un moment de bien-être 
                 grâce à des gestes doux et respectueux que nous nous imposons.
               </p>
-              <p className="text-base md:text-lg text-gray-700 mb-4 leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 mb-3 md:mb-4 leading-relaxed">
                 Un toilettage adapté et une approche calme deviennent une expérience apaisante et bénéfique 
                 pour votre compagnon.
               </p>
-              <p className="text-base md:text-lg text-gray-700 mb-8 leading-relaxed">
+              <p className="text-sm md:text-base text-gray-700 mb-6 leading-relaxed">
                 Découvrez nos prestations et offrez à votre fidèle compagnon le soin qu'il mérite dans notre 
                 salon de toilettage à Vaux-le-Pénil.
               </p>
@@ -105,7 +106,7 @@ export default function Prestations() {
                     ease: "easeInOut"
                   }}
                 >
-                  <FaPaw className="w-6 h-6" />
+                  <FaPaw className="w-4 h-4 md:w-5 md:h-5" />
                 </motion.div>
                 <motion.div
                   animate={{ 
@@ -118,7 +119,7 @@ export default function Prestations() {
                     delay: 0.5
                   }}
                 >
-                  <FaHeart className="w-6 h-6" />
+                  <FaHeart className="w-4 h-4 md:w-5 md:h-5" />
                 </motion.div>
               </div>
             </motion.div>
@@ -126,9 +127,9 @@ export default function Prestations() {
         </section>
 
         {/* Services Grid */}
-        <section className="py-12 md:py-16">
+        <section className="py-6 md:py-12">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 lg:gap-12">
               {/* Service 1 */}
               <motion.div 
                 className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 group"
@@ -137,7 +138,7 @@ export default function Prestations() {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <div className="relative h-48 md:h-64 overflow-hidden">
+                <div className="relative h-40 md:h-64 overflow-hidden">
                   <Image
                     src="/images/toilettage-complet.jpg"
                     alt="Toilettage complet"
@@ -149,16 +150,16 @@ export default function Prestations() {
                     <Badge>Service Complet</Badge>
                   </div>
                 </div>
-                <div className="p-6 md:p-8">
-                  <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-                    <FaCut className="text-brand w-6 h-6" />
+                <div className="p-4 md:p-8">
+                  <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2 md:gap-3">
+                    <FaCut className="text-brand w-5 h-5 md:w-6 md:h-6" />
                     <span>Toilettage Complet pour Chiens</span>
                   </h2>
-                  <p className="text-gray-700 mb-6 leading-relaxed">
+                  <p className="text-sm md:text-base text-gray-700 mb-4 md:mb-6 leading-relaxed">
                     Notre toilettage complet inclut tous les soins essentiels pour garantir le confort 
                     et la beauté de votre chien.
                   </p>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2 md:space-y-3">
                     {[
                       { icon: '✂️', text: 'Coupe des ongles si nécessaire' },
                       { icon: '🛁', text: 'Bain et séchage professionnel' },
@@ -168,7 +169,7 @@ export default function Prestations() {
                     ].map((item, index) => (
                       <motion.li 
                         key={index}
-                        className="flex items-center gap-3 text-gray-700"
+                        className="flex items-center gap-2 md:gap-3 text-sm md:text-base text-gray-700"
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
@@ -190,7 +191,7 @@ export default function Prestations() {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <div className="relative h-48 md:h-64 overflow-hidden">
+                <div className="relative h-40 md:h-64 overflow-hidden">
                   <Image
                     src="/images/pexels-photo-6816855.webp"
                     alt="Bain et séchage"
@@ -202,16 +203,16 @@ export default function Prestations() {
                     <Badge>Soin Essentiel</Badge>
                   </div>
                 </div>
-                <div className="p-6 md:p-8">
-                  <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-                    <FaShower className="text-brand w-6 h-6" />
+                <div className="p-4 md:p-8">
+                  <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2 md:gap-3">
+                    <FaShower className="text-brand w-5 h-5 md:w-6 md:h-6" />
                     <span>Bain et Séchage</span>
                   </h2>
                   <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                     Offrez à votre chien un bain relaxant et un séchage doux pour un pelage propre et soyeux. 
                     Ce soin est idéal pour rafraîchir votre compagnon entre deux toilettages complets.
                   </p>
-                  <div className="mt-6 flex flex-col items-center space-y-2">
+                  <div className="mt-4 flex flex-col items-center space-y-2">
                     <Badge>Douceur garantie</Badge>
                     <Badge>Sans stress</Badge>
                     <Badge>Produits naturels</Badge>
@@ -227,7 +228,7 @@ export default function Prestations() {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <div className="relative h-48 md:h-64 overflow-hidden">
+                <div className="relative h-40 md:h-64 overflow-hidden">
                   <Image
                     src="/images/pexels-photo-6816866.jpeg"
                     alt="Soins adaptés"
@@ -239,12 +240,12 @@ export default function Prestations() {
                     <Badge>Soins Personnalisés</Badge>
                   </div>
                 </div>
-                <div className="p-6 md:p-8">
-                  <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-                    <FaHeart className="text-brand w-6 h-6" />
+                <div className="p-4 md:p-8">
+                  <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2 md:gap-3">
+                    <FaHeart className="text-brand w-5 h-5 md:w-6 md:h-6" />
                     <span>Soins Adaptés et Personnalisés</span>
                   </h2>
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                       Chez Dog'Factory, chaque bain est conçu pour répondre aux besoins spécifiques de votre chien. 
                       Nous utilisons des produits respectueux pour offrir à votre compagnon un soin de qualité.
@@ -254,7 +255,7 @@ export default function Prestations() {
                       d'un pelage propre, soyeux et délicatement parfumé.
                     </p>
                   </div>
-                  <div className="mt-6 space-y-3">
+                  <div className="mt-4 space-y-2">
                     {[
                       'Produits adaptés à chaque type de pelage',
                       'Techniques douces et respectueuses',
@@ -262,13 +263,13 @@ export default function Prestations() {
                     ].map((item, index) => (
                       <motion.div 
                         key={index}
-                        className="flex items-center gap-2 text-gray-700"
+                        className="flex items-center gap-2 md:gap-3 text-sm md:text-base text-gray-700"
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
                         viewport={{ once: true }}
                       >
-                        <FaCheck className="text-brand flex-shrink-0" />
+                        <FaCheck className="text-brand w-4 h-4 flex-shrink-0" />
                         <span>{item}</span>
                       </motion.div>
                     ))}
@@ -284,7 +285,7 @@ export default function Prestations() {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <div className="relative h-48 md:h-64 overflow-hidden">
+                <div className="relative h-40 md:h-64 overflow-hidden">
                   <Image
                     src="/images/épilation/épilation.webp"
                     alt="Épilation spécialisée"
@@ -296,12 +297,12 @@ export default function Prestations() {
                     <Badge>Soin Spécialisé</Badge>
                   </div>
                 </div>
-                <div className="p-6 md:p-8">
-                  <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-                    <FaCut className="text-brand w-6 h-6" />
+                <div className="p-4 md:p-8">
+                  <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-3 md:mb-4 flex items-center gap-2 md:gap-3">
+                    <FaCut className="text-brand w-5 h-5 md:w-6 md:h-6" />
                     <span>Épilations Spécialisées</span>
                   </h2>
-                  <div className="space-y-4 md:space-y-6">
+                  <div className="space-y-3">
                     <div className="p-3 md:p-4 bg-gray-50 rounded-xl">
                       <h3 className="text-base md:text-lg font-semibold mb-2 text-gray-900">Épilation pour races à poils durs</h3>
                       <p className="text-sm md:text-base text-gray-700 leading-relaxed">
@@ -324,22 +325,22 @@ export default function Prestations() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-12 md:py-16 bg-brand/5 px-4">
+        <section className="py-6 md:py-10 bg-brand/5 px-4">
           <div className="container mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="max-w-3xl mx-auto text-center mb-8 md:mb-12"
+              className="max-w-3xl mx-auto text-center mb-6"
             >
               <Badge>Questions Fréquentes</Badge>
-              <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mt-4 md:mt-6">
+              <h2 className="text-xl md:text-3xl font-bold text-gray-900 mt-3">
                 Tout ce que vous devez savoir
               </h2>
             </motion.div>
 
-            <div className="max-w-3xl mx-auto space-y-4 md:space-y-6">
+            <div className="max-w-3xl mx-auto space-y-3">
               {[
                 {
                   question: "Combien de temps dure une séance de toilettage ?",
@@ -364,151 +365,141 @@ export default function Prestations() {
               ].map((item, index) => (
                 <motion.div
                   key={index}
-                  className="bg-white rounded-xl shadow-sm p-6"
+                  className="bg-white rounded-xl shadow-sm p-4 md:p-6"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-start gap-3">
-                    <FaCheck className="text-brand w-5 h-5 mt-1 flex-shrink-0" />
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2 flex items-start gap-2">
+                    <FaCheck className="text-brand w-4 h-4 mt-1 flex-shrink-0" />
                     {item.question}
                   </h3>
-                  <p className="text-gray-700 ml-8">{item.answer}</p>
+                  <p className="text-sm md:text-base text-gray-700 ml-6">{item.answer}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Google Reviews Section */}
-        <section className="py-12 md:py-16">
+        {/* Reviews Section */}
+        <section className="py-6 md:py-10 bg-gray-50">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="max-w-3xl mx-auto text-center mb-12"
+              className="text-center mb-6"
             >
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <FaGoogle className="text-2xl text-[#4285F4]" />
-                <Badge>Avis Google</Badge>
-              </div>
-              <h2 className="text-2xl md:text-4xl font-bold text-gray-900">
-                Ce que disent nos clients
+              <Badge>Avis Clients</Badge>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-4">
+                Ce que pensent nos clients
               </h2>
             </motion.div>
 
-            <div className="max-w-4xl mx-auto px-4 sm:px-6">
-              {loading && (
-                <div className="text-center py-8">
-                  <p className="text-gray-600">Chargement des avis...</p>
-                </div>
-              )}
-              
-              {!loading && reviews.length === 0 && (
-                <div className="text-center py-8">
-                  <p className="text-gray-600">Aucun avis disponible pour le moment.</p>
-                </div>
-              )}
-
-              {/* Reviews Carousel */}
-              {!loading && reviews.length > 0 && (
-                <div className="mb-12">
-                  <Swiper
-                    modules={[Autoplay, Pagination]}
-                    spaceBetween={20}
-                    slidesPerView={1}
-                    autoplay={{
-                      delay: 5000,
-                      disableOnInteraction: false,
-                    }}
-                    pagination={{
-                      clickable: true,
-                      bulletActiveClass: 'swiper-pagination-bullet-active bg-brand',
-                    }}
-                    breakpoints={{
-                      640: {
-                        slidesPerView: 2,
-                        spaceBetween: 20,
-                      },
-                    }}
-                    className="pb-12"
-                  >
-                    {reviews.map((review, index) => (
-                      <SwiperSlide key={index}>
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                          className="bg-white p-4 sm:p-6 rounded-xl shadow-md h-full flex flex-col"
-                        >
-                          <div className="flex items-start gap-3">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 flex-shrink-0 flex items-center justify-center overflow-hidden">
-                              {review.profile_photo_url ? (
-                                <Image
-                                  src={review.profile_photo_url}
-                                  alt={review.author_name}
-                                  width={48}
-                                  height={48}
-                                  className="rounded-full w-full h-full object-cover"
-                                />
-                              ) : (
-                                <FaUser className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
-                              )}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between mb-1 sm:mb-2">
-                                <h4 className="font-medium text-gray-900 text-sm sm:text-base truncate">{review.author_name}</h4>
-                                <span className="text-xs sm:text-sm text-gray-500">
-                                  {new Date(review.time * 1000).toLocaleDateString()}
-                                </span>
-                              </div>
-                              <div className="flex items-center gap-1 mb-2">
-                                {[...Array(5)].map((_, i) => (
-                                  <FaStar
-                                    key={i}
-                                    className={`w-3 h-3 sm:w-4 sm:h-4 ${
-                                      i < review.rating ? 'text-yellow-400' : 'text-gray-200'
-                                    }`}
-                                  />
-                                ))}
-                              </div>
-                              <p className="text-gray-600 text-xs sm:text-sm line-clamp-4">{review.text}</p>
-                            </div>
-                          </div>
-                        </motion.div>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                  
-                  <div className="text-center mt-8 space-y-4">
-                    <a
-                      href="https://g.page/r/CeWJXZjJlxoyEAE/review"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#4285F4] text-white text-sm sm:text-base rounded-full hover:bg-[#3367D6] transition-colors"
+            <div className="relative max-w-5xl mx-auto">
+              <Swiper
+                modules={[Navigation, Pagination]}
+                spaceBetween={12}
+                slidesPerView={1.2}
+                centeredSlides={true}
+                loop={true}
+                navigation={{
+                  prevEl: '.swiper-button-prev',
+                  nextEl: '.swiper-button-next',
+                }}
+                pagination={{
+                  el: '.swiper-pagination',
+                  clickable: true,
+                }}
+                breakpoints={{
+                  480: {
+                    slidesPerView: 1.5,
+                    spaceBetween: 15,
+                    centeredSlides: true,
+                  },
+                  640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                    centeredSlides: false,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                    centeredSlides: false,
+                  },
+                }}
+                className="!pb-12 !px-4 md:!px-0"
+              >
+                {reviews.map((review, index) => (
+                  <SwiperSlide key={index} className="pb-2">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="bg-white rounded-2xl shadow-lg p-4 md:p-6 h-full flex flex-col"
                     >
-                      <FaGoogle className="text-lg sm:text-xl" />
-                      <span>Laisser un avis</span>
-                    </a>
-                    <div>
-                      <a
-                        href="https://search.google.com/local/reviews?placeid=ChIJgwPkdMjx5UcR5YldmMmXGjI"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-brand hover:text-brand/80 transition-colors mt-4 text-sm sm:text-base"
-                      >
-                        <span>Voir tous les avis sur Google</span>
-                        <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              )}
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-10 h-10 md:w-12 md:h-12 relative flex-shrink-0">
+                          <Image
+                            src={review.profile_photo_url || "/images/default-avatar.png"}
+                            alt={review.author_name}
+                            fill
+                            className="rounded-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900 text-sm md:text-base">{review.author_name}</h3>
+                          <div className="flex items-center gap-0.5 text-yellow-400">
+                            {[...Array(5)].map((_, i) => (
+                              <FaStar key={i} className={`w-3 h-3 ${i < review.rating ? "text-yellow-400" : "text-gray-300"}`} />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-xs md:text-sm text-gray-700 flex-grow line-clamp-4 mb-2">{review.text}</p>
+                      <div className="text-xs text-gray-500">
+                        {new Date(review.time * 1000).toLocaleDateString()}
+                      </div>
+                    </motion.div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              
+              {/* Navigation Buttons */}
+              <div className="swiper-button-prev !hidden md:!flex !text-brand hover:!text-brand/80 after:!text-xl !w-8 !h-8 !bg-white/90 !rounded-full shadow-md -left-4 md:left-0"></div>
+              <div className="swiper-button-next !hidden md:!flex !text-brand hover:!text-brand/80 after:!text-xl !w-8 !h-8 !bg-white/90 !rounded-full shadow-md -right-4 md:right-0"></div>
+              
+              {/* Pagination */}
+              <div className="swiper-pagination !bottom-0 !pt-4"></div>
+            </div>
+
+            {/* Google Review Links */}
+            <div className="text-center mt-4 md:mt-6 space-y-3">
+              <a
+                href="https://g.page/r/CeWJXZjJlxoyEAE/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#4285F4] text-white text-xs md:text-sm rounded-full hover:bg-[#3367D6] transition-colors"
+              >
+                <FaGoogle className="text-base md:text-lg" />
+                <span>Laisser un avis</span>
+              </a>
+              <div>
+                <a
+                  href="https://search.google.com/local/reviews?placeid=ChIJgwPkdMjx5UcR5YldmMmXGjI"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-brand hover:text-brand/80 transition-colors text-xs md:text-sm"
+                >
+                  <span>Voir tous les avis sur Google</span>
+                  <svg className="w-3 h-3 md:w-4 md:h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </section>
