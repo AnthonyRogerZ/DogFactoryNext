@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa'
-import { HiX } from 'react-icons/hi'
+import { HiX, HiChevronRight, HiPhone, HiLocationMarker } from 'react-icons/hi'
 import { FaBone } from 'react-icons/fa'
 import { socialLinks } from '@/data/socialLinks';
 import { usePathname } from 'next/navigation';
@@ -170,27 +170,77 @@ export default function Header() {
               open: { opacity: 1, height: "auto", marginTop: 0 },
               closed: { opacity: 0, height: 0, marginTop: 0 }
             }}
-            transition={{ duration: 0.2 }}
-            className="lg:hidden overflow-hidden absolute top-full left-0 right-0 bg-gradient-to-b from-white to-[#f8f9f7] shadow-lg z-50"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden overflow-hidden absolute top-full left-0 right-0 bg-white shadow-lg z-50"
           >
-            <div className="px-4 py-3">
-              <nav className="space-y-3">
-                {menuItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200
-                      ${pathname === item.href 
-                        ? 'bg-brand/10 text-brand' 
-                        : 'text-gray-800 hover:bg-brand/5 hover:text-brand'
-                      }`
-                    }
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </nav>
+            <div className="container mx-auto">
+              <div className="divide-y divide-gray-100">
+                {/* Navigation */}
+                <nav className="py-2">
+                  {menuItems.map((item, index) => (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        className={`flex items-center justify-between px-4 py-3 mx-2 my-1 rounded-xl transition-all duration-200
+                          ${pathname === item.href 
+                            ? 'bg-brand/10 text-brand font-medium' 
+                            : 'text-gray-600 hover:bg-gray-50 hover:text-brand active:bg-gray-100'
+                          }`
+                        }
+                      >
+                        <span className="text-sm">{item.name}</span>
+                        <motion.div
+                          animate={{ x: pathname === item.href ? 0 : -5, opacity: pathname === item.href ? 1 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <HiChevronRight className="w-4 h-4" />
+                        </motion.div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </nav>
+
+                {/* Contact rapide */}
+                <div className="py-4 px-4">
+                  <h3 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Contact rapide</h3>
+                  <div className="space-y-3">
+                    <a 
+                      href="tel:0658166105"
+                      className="flex items-center space-x-3 p-3 rounded-xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors duration-200"
+                    >
+                      <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-brand/10">
+                        <HiPhone className="w-4 h-4 text-brand" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-400">Téléphone</div>
+                        <div className="text-sm font-medium">06 58 16 61 05</div>
+                      </div>
+                    </a>
+                    
+                    <a 
+                      href="https://maps.google.com/?q=79+rue+de+la+Baste+77000+Vaux-le-Pénil"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-3 p-3 rounded-xl bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors duration-200"
+                    >
+                      <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-brand/10">
+                        <HiLocationMarker className="w-4 h-4 text-brand" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-400">Adresse</div>
+                        <div className="text-sm font-medium">79 rue de la Baste</div>
+                        <div className="text-sm text-gray-500">77000 Vaux-le-Pénil</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
 
