@@ -51,7 +51,7 @@ export default function Location() {
       <Header />
       <main className="min-h-screen bg-gray-50 pt-16 md:pt-20">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-b from-brand/5 to-transparent py-8 md:py-12">
+        <section className="relative bg-gradient-to-b from-brand/5 to-transparent py-6 md:py-8">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <motion.h1 
@@ -81,11 +81,11 @@ export default function Location() {
         </section>
 
         {/* Main Content */}
-        <section className="py-8 md:py-12">
+        <section className="py-8 sm:pt-8 sm:pb-0">
           
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-6">
                 {/* Map */}
                 <motion.div 
                   className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 h-[300px] md:h-[480px] relative group"
@@ -98,9 +98,9 @@ export default function Location() {
                     href="https://www.google.com/maps/dir//Dog'Factory+79+Rue+de+la+Baste+77000+Vaux-le-P%C3%A9nil+France/@48.5288056,2.6753789,17z"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute top-3 right-3 md:top-4 md:right-4 px-3 md:px-4 py-1.5 md:py-2 bg-white/90 backdrop-blur-sm rounded-full text-xs md:text-sm font-medium text-gray-900 shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-20 hover:bg-brand hover:text-white"
+                    className="inline-flex items-center justify-center px-6 py-2.5 bg-[#5B5F3D] text-white text-sm font-medium rounded-lg hover:bg-[#4A4D32] transition-colors w-auto"
                   >
-                    Obtenir l'itinéraire
+                    Itinéraire →
                   </a>
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2637.439866011612!2d2.6753788775780387!3d48.52880557123648!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e5fa6c6e9e9be9%3A0x6fc7a9d4c96d1ab7!2sDog'Factory!5e0!3m2!1sfr!2sfr!4v1707916234567!5m2!1sfr!2sfr"
@@ -216,7 +216,7 @@ export default function Location() {
               </div>
 
               {/* Contact Info and Hours */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-0">
                 {/* Contact Info */}
                 <motion.div 
                   className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6"

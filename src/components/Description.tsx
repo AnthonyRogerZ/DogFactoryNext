@@ -47,49 +47,47 @@ export default function Description() {
   }, [])
 
   return (
-    <section className="py-8 sm:py-12 bg-white w-full">
+    <section className="py-4 sm:py-8 bg-white w-full">
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto">
           {/* En-tête de section */}
-          <motion.div 
-            initial="initial"
+          <motion.div
             whileInView="animate"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="text-center mb-8 sm:mb-12 mt-8 sm:mt-12"
+            className="text-center mb-4 sm:mb-8"
           >
             <motion.h2 
               variants={fadeInUp}
-              className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-[#5B5F3D]"
+              className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-4 text-[#5B5F3D]"
             >
               À chacun son toilettage
             </motion.h2>
             <motion.div 
               variants={fadeInUp}
-              className="w-24 h-1 bg-[#5B5F3D]/20 mx-auto rounded-full mb-6"
+              className="w-20 h-1 bg-[#5B5F3D]/20 mx-auto rounded-full mb-2 sm:mb-4"
             />
           </motion.div>
 
           {/* Cartes d'information */}
           <motion.div
-            initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8 sm:mb-12"
+            className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 mb-4 sm:mb-8"
           >
             {/* Carte 1 */}
             <motion.div
               variants={fadeInUp}
-              className="bg-[#F5F5F0] rounded-2xl p-6 transform hover:scale-[1.02] transition-transform duration-300"
+              className="bg-[#F5F5F0] rounded-2xl p-3 sm:p-6 transform hover:scale-[1.02] transition-transform duration-300"
             >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#5B5F3D]/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">💝</span>
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#5B5F3D]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl sm:text-2xl">💝</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-[#5B5F3D] mb-3">Notre passion</h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[#5B5F3D] mb-2 sm:mb-3">Notre passion</h3>
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                     Chez Dog'Factory, c'est la passion qui nous anime et qui nous donne envie chaque jour 
                     de prendre soin de vos chiens, tout comme nous le faisons avec Léon, notre mascotte.
                   </p>
@@ -100,15 +98,15 @@ export default function Description() {
             {/* Carte 2 */}
             <motion.div
               variants={fadeInUp}
-              className="bg-[#F5F5F0] rounded-2xl p-6 transform hover:scale-[1.02] transition-transform duration-300"
+              className="bg-[#F5F5F0] rounded-2xl p-3 sm:p-6 transform hover:scale-[1.02] transition-transform duration-300"
             >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#5B5F3D]/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">🐾</span>
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#5B5F3D]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl sm:text-2xl">🐾</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-[#5B5F3D] mb-3">Votre première visite</h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[#5B5F3D] mb-2 sm:mb-3">Votre première visite</h3>
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                     Pour certains, le toilettage est une habitude, pour d'autres, c'est nouveau. 
                     Nous vous accompagnons pas à pas pour une expérience sereine et agréable.
                   </p>
@@ -119,44 +117,39 @@ export default function Description() {
 
           {/* Section équipe */}
           <motion.div
-            initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="bg-gradient-to-br from-[#5B5F3D]/5 to-[#8B4513]/5 rounded-3xl p-8 mb-8 sm:mb-12 text-center"
+            className="bg-gradient-to-br from-[#5B5F3D]/5 to-[#8B4513]/5 rounded-3xl p-4 sm:p-6 mb-6 sm:mb-8"
           >
-            <motion.div variants={fadeInUp} className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-[#5B5F3D] mb-4">
-                Christine & Aubane
-              </h3>
-              <p className="text-gray-600 max-w-2xl mx-auto">
+            {/* Équipe */}
+            <motion.div variants={fadeInUp} className="text-center mb-6">
+              <h3 className="text-xl font-bold text-[#5B5F3D] mb-3">Christine & Aubane</h3>
+              <p className="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed">
                 Notre équipe passionnée vous accueille dans une ambiance chaleureuse et 
                 professionnelle. Chaque animal est unique, et nous adaptons nos soins en conséquence.
               </p>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 bg-[#5B5F3D]/10 rounded-full flex items-center justify-center">
-                    <span className="text-3xl">✨</span>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-[#5B5F3D]">Expertise</h4>
-                    <p className="text-gray-600">Un savoir-faire unique</p>
-                  </div>
+            {/* Cartes d'expertise */}
+            <motion.div variants={fadeInUp} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 flex items-center gap-3">
+                <div className="w-10 h-10 bg-[#5B5F3D]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl">✨</span>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold text-[#5B5F3D] mb-1">Expertise</h4>
+                  <p className="text-sm text-gray-600">Un savoir-faire unique</p>
                 </div>
               </div>
 
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 bg-[#5B5F3D]/10 rounded-full flex items-center justify-center">
-                    <span className="text-3xl">💖</span>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-[#5B5F3D]">Bienveillance</h4>
-                    <p className="text-gray-600">Une approche douce et attentionnée</p>
-                  </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 flex items-center gap-3">
+                <div className="w-10 h-10 bg-[#5B5F3D]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl">💖</span>
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold text-[#5B5F3D] mb-1">Bienveillance</h4>
+                  <p className="text-sm text-gray-600">Une approche douce et attentionnée</p>
                 </div>
               </div>
             </motion.div>
@@ -164,157 +157,107 @@ export default function Description() {
 
           {/* Section attention personnalisée et horaires */}
           <motion.div
-            initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="bg-gradient-to-br from-[#5B5F3D]/5 to-[#8B4513]/5 rounded-3xl p-6 sm:p-8 mb-8 sm:mb-12"
+            className="bg-gradient-to-br from-[#5B5F3D]/5 to-[#8B4513]/5 rounded-3xl p-4 sm:p-6 mb-6 sm:mb-8"
           >
-            <motion.div variants={fadeInUp} className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <motion.div variants={fadeInUp} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {/* Colonne de gauche - Texte et CTA */}
-              <div className="space-y-6">
-                <div className="space-y-4 text-gray-600">
-                  <h3 className="text-xl font-semibold text-[#5B5F3D]">
-                    Dans notre salon, chaque chien profite d'une attention bienveillante et d'un soin personnalisé
-                  </h3>
-                  <p>
-                    Conscientes que le toilettage peut être un moment stressant pour votre chien, nous mettons tout 
-                    en œuvre pour le rassurer et lui offrir une expérience apaisante.
-                  </p>
-                  <p>
-                    Des soins doux, respectant la peau et le pelage, seront utilisés pour votre compagnon.
-                  </p>
-                  <p>
-                    Avec une approche douce et rassurante, votre loulou sera apaisé et réconforté.
-                  </p>
-                  <p className="text-xl font-semibold text-[#5B5F3D]">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-sm space-y-3 sm:space-y-4">
+                <h3 className="text-lg sm:text-xl font-bold text-[#5B5F3D] leading-relaxed">
+                  Dans notre salon, chaque chien profite d'une attention bienveillante et d'un soin personnalisé
+                </h3>
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <span className="text-[#8B4513] text-base sm:text-xl mt-1">🐾</span>
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                      Conscientes que le toilettage peut être un moment stressant pour votre chien, nous mettons tout 
+                      en œuvre pour le rassurer et lui offrir une expérience apaisante.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <span className="text-[#8B4513] text-base sm:text-xl mt-1">🌿</span>
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                      Des soins doux, respectant la peau et le pelage, seront utilisés pour votre compagnon.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <span className="text-[#8B4513] text-base sm:text-xl mt-1">💝</span>
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                      Avec une approche douce et rassurante, votre loulou sera apaisé et réconforté.
+                    </p>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-[#5B5F3D]/10">
+                  <p className="text-lg sm:text-xl font-bold text-[#5B5F3D] flex items-center gap-2">
+                    <span className="text-[#8B4513] text-base sm:text-xl">🤎</span>
                     Votre chien est notre priorité.
                   </p>
-                </div>
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-4 pt-4">
-                  <Link href="/prestations" className="flex-1 sm:flex-initial">
-                    <span className="flex items-center justify-center gap-2 px-6 py-3 bg-[#5B5F3D] text-white rounded-full 
-                      hover:bg-[#4A4E2F] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl
-                      w-full sm:w-auto">
-                      <span>Découvrir nos prestations</span>
-                      <span className="text-lg">→</span>
-                    </span>
-                  </Link>
-                  <Link href="/contact" className="flex-1 sm:flex-initial">
-                    <span className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#5B5F3D] rounded-full 
-                      border-2 border-[#5B5F3D] hover:bg-[#5B5F3D] hover:text-white
-                      transform hover:scale-105 transition-all duration-300
-                      w-full sm:w-auto">
-                      <span>Réserver une séance</span>
-                      <span className="text-lg">→</span>
-                    </span>
-                  </Link>
                 </div>
               </div>
 
               {/* Colonne de droite - Horaires */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-                  <h3 className="text-xl font-semibold text-[#5B5F3D] flex items-center gap-3">
-                    <FaClock className="w-5 h-5" />
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-sm">
+                <div className="flex flex-col space-y-4">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#5B5F3D] flex items-center gap-2">
+                    <FaClock className="w-4 h-4 sm:w-5 sm:h-5" />
                     Nos horaires d'ouverture
                   </h3>
-                  <div className={`flex items-center gap-2 px-4 py-2 rounded-xl ${
-                    isOpen 
-                      ? 'bg-green-50 text-green-700 border border-green-100' 
-                      : 'bg-red-50 text-red-700 border border-red-100'
-                  }`}>
-                    <div className={`w-3 h-3 rounded-full ${
-                      isOpen 
-                        ? 'bg-green-500 animate-pulse' 
-                        : 'bg-red-500'
-                    }`} />
-                    <span className="font-medium text-sm">
-                      {isOpen ? 'Ouvert' : 'Fermé'}
-                    </span>
-                  </div>
-                </div>
 
-                <div className="grid gap-4">
-                  <div className="relative">
-                    <div className={`flex flex-col md:flex-row md:items-center md:justify-between p-4 rounded-xl ${
+                  <div className="space-y-3">
+                    {/* Status ouvert/fermé */}
+                    <div className="bg-green-50 text-green-700 rounded-lg px-3 py-2 text-sm inline-flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                      Ouvert
+                    </div>
+
+                    {/* Horaires semaine */}
+                    <div className={`space-y-1 p-2 rounded-lg ${
                       currentDay !== 'Dimanche' && currentDay !== 'Samedi'
-                        ? 'bg-gradient-to-r from-[#5B5F3D]/5 to-[#5B5F3D]/10 border border-[#5B5F3D]/10'
-                        : 'bg-gray-50 border border-gray-100'
+                        ? 'bg-gradient-to-r from-[#5B5F3D]/5 to-[#8B4513]/5'
+                        : ''
                     }`}>
-                      <div className="flex items-center gap-3 mb-3 md:mb-0">
-                        <h4 className="font-medium text-[#5B5F3D]">Lundi à Vendredi</h4>
-                        {(currentDay !== 'Dimanche' && currentDay !== 'Samedi') && (
-                          <span className="text-xs px-2 py-1 rounded-full bg-[#5B5F3D]/10 text-[#5B5F3D]">
-                            Aujourd'hui
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="px-4 py-1.5 rounded-lg bg-white/80 backdrop-blur-sm font-medium text-[#5B5F3D] shadow-sm">
-                          9h00 – 18h00
-                        </span>
+                      <div className="text-gray-700 font-medium">Lundi à Vendredi</div>
+                      <div className="bg-white/50 rounded-lg px-3 py-2 text-sm text-gray-600 inline-block">
+                        9h00 – 18h00
                       </div>
                     </div>
-                  </div>
 
-                  <div className="relative">
-                    <div className={`flex flex-col md:flex-row md:items-center md:justify-between p-4 rounded-xl ${
+                    {/* Horaires samedi */}
+                    <div className={`space-y-1 p-2 rounded-lg ${
                       currentDay === 'Samedi'
-                        ? 'bg-gradient-to-r from-[#5B5F3D]/5 to-[#5B5F3D]/10 border border-[#5B5F3D]/10'
-                        : 'bg-gray-50 border border-gray-100'
+                        ? 'bg-gradient-to-r from-[#5B5F3D]/5 to-[#8B4513]/5'
+                        : ''
                     }`}>
-                      <div className="flex items-center gap-3 mb-3 md:mb-0">
-                        <h4 className="font-medium text-[#5B5F3D]">Samedi</h4>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-700 font-medium">Samedi</span>
                         {currentDay === 'Samedi' && (
-                          <span className="text-xs px-2 py-1 rounded-full bg-[#5B5F3D]/10 text-[#5B5F3D]">
-                            Aujourd'hui
-                          </span>
+                          <span className="text-xs bg-[#5B5F3D]/10 text-[#5B5F3D] px-2 py-0.5 rounded">Aujourd'hui</span>
                         )}
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="px-4 py-1.5 rounded-lg bg-white/80 backdrop-blur-sm font-medium text-[#5B5F3D] shadow-sm">
-                          9h00 – 17h00
-                        </span>
+                      <div className="bg-white/50 rounded-lg px-3 py-2 text-sm text-gray-600 inline-block">
+                        9h00 – 17h00
                       </div>
                     </div>
-                  </div>
 
-                  <div className="relative">
-                    <div className={`flex flex-col md:flex-row md:items-center md:justify-between p-4 rounded-xl ${
+                    {/* Horaires dimanche */}
+                    <div className={`space-y-1 p-2 rounded-lg ${
                       currentDay === 'Dimanche'
-                        ? 'bg-gradient-to-r from-red-50 to-red-100/50 border border-red-100'
-                        : 'bg-gray-50 border border-gray-100'
+                        ? 'bg-gradient-to-r from-red-50 to-red-100/50'
+                        : ''
                     }`}>
-                      <div className="flex items-center gap-3 mb-3 md:mb-0">
-                        <h4 className="font-medium text-[#5B5F3D]">Dimanche</h4>
-                        {currentDay === 'Dimanche' && (
-                          <span className="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700">
-                            Aujourd'hui
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="px-4 py-1.5 rounded-lg bg-white/80 backdrop-blur-sm font-medium text-red-500 shadow-sm">
-                          Fermé
-                        </span>
-                      </div>
+                      <div className="text-gray-700 font-medium">Dimanche</div>
+                      <div className="text-red-500 text-sm">Fermé</div>
                     </div>
                   </div>
-                </div>
 
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                  <div className="flex flex-col sm:flex-row items-center gap-3 sm:justify-between">
-                    <div className="text-gray-600 text-sm flex items-center gap-2">
-                      <span className="text-[#5B5F3D]">•</span>
-                      <span>Fermé les jours fériés</span>
-                    </div>
-                    <a 
-                      href="tel:0658166105" 
-                      className="flex items-center gap-2 text-[#5B5F3D] hover:text-[#8B4513] transition-colors"
-                    >
-                      <FaPhone className="text-sm" />
-                      <span className="font-medium">06 58 16 61 05</span>
+                  {/* Note et téléphone */}
+                  <div className="space-y-3 pt-3 border-t border-[#5B5F3D]/10">
+                    <div className="text-sm text-gray-500">Fermé les jours fériés</div>
+                    <a href="tel:0658166105" className="inline-flex items-center gap-2 text-[#5B5F3D] font-medium hover:text-[#8B4513] transition-colors">
+                      <FaPhone className="w-4 h-4" />
+                      <span>06 58 16 61 05</span>
                     </a>
                   </div>
                 </div>
@@ -324,21 +267,20 @@ export default function Description() {
 
           {/* Section carte */}
           <motion.div
-            initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="mb-8 sm:mb-12"
+            className="mb-4 sm:mb-8"
           >
             <motion.h2 
               variants={fadeInUp}
-              className="text-2xl font-bold text-center text-[#5B5F3D] mb-6"
+              className="text-xl sm:text-2xl font-bold text-center text-[#5B5F3D] mb-3 sm:mb-6"
             >
               Où nous trouver
             </motion.h2>
             <motion.div 
               variants={fadeInUp}
-              className="w-full h-[300px] sm:h-[400px] rounded-2xl overflow-hidden shadow-lg"
+              className="w-full h-[200px] sm:h-[300px] rounded-2xl overflow-hidden shadow-lg"
             >
               <iframe
                 src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBulQMPxh7gKAK4oQONr1ellsYl3pIqyVM&q=Dog'Factory,+79+Rue+de+la+Baste,+77000+Vaux-le-Pénil"
@@ -350,7 +292,7 @@ export default function Description() {
             </motion.div>
             <motion.div 
               variants={fadeInUp}
-              className="text-center mt-6"
+              className="text-center mt-3 sm:mt-6"
             >
               <a 
                 href="https://www.google.com/maps/dir/?api=1&destination=48.5199858,2.6742563" 
