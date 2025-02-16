@@ -4,8 +4,6 @@ import { motion } from 'framer-motion'
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaBus, FaCar, FaParking, FaExclamation } from 'react-icons/fa'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 
 export default function Location() {
   const [isOpen, setIsOpen] = useState(false)
@@ -48,7 +46,6 @@ export default function Location() {
 
   return (
     <>
-      <Header />
       <main className="min-h-screen bg-gray-50 pt-16 md:pt-20">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-b from-brand/5 to-transparent py-6 md:py-8">
@@ -88,7 +85,7 @@ export default function Location() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 mb-3 md:mb-6">
                 {/* Map */}
                 <motion.div 
-                  className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 h-[250px] md:h-[480px] relative group"
+                  className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 h-[250px] md:h-[460px] relative group"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6 }}
@@ -409,7 +406,6 @@ export default function Location() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   )
 }

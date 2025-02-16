@@ -89,7 +89,7 @@ export default function ContactForm() {
           required
           value={formData.name}
           onChange={handleChange}
-          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand text-sm h-9 md:h-10"
+          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand text-sm h-6 md:h-7"
         />
       </div>
 
@@ -104,7 +104,7 @@ export default function ContactForm() {
           required
           value={formData.email}
           onChange={handleChange}
-          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand text-sm h-9 md:h-10"
+          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand text-sm h-6 md:h-7"
         />
       </div>
 
@@ -118,7 +118,7 @@ export default function ContactForm() {
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand text-sm h-9 md:h-10"
+          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand text-sm h-6 md:h-7"
         />
       </div>
 
@@ -130,7 +130,7 @@ export default function ContactForm() {
           id="message"
           name="message"
           required
-          rows={4}
+          rows={3}
           value={formData.message}
           onChange={handleChange}
           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand text-sm"

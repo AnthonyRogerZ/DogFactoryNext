@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { FaPaw, FaHeart, FaCut, FaShower, FaCheck, FaStar, FaGoogle, FaMapMarkerAlt, FaPhone, FaUser } from 'react-icons/fa'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
@@ -100,7 +98,6 @@ export default function Prestations() {
 
   return (
     <>
-      <Header />
       <main className="min-h-screen bg-white pt-16 md:pt-16">
         {/* Hero Section */}
         <section className="relative py-6 md:py-10 bg-gradient-to-b from-brand/5 to-white">
@@ -537,7 +534,6 @@ export default function Prestations() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   )
 }

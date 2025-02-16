@@ -3,8 +3,6 @@
 import { motion } from 'framer-motion'
 import { FaFacebookF, FaInstagram, FaTiktok, FaPhone, FaMapMarkerAlt, FaEnvelope } from 'react-icons/fa'
 import ContactForm from '@/components/ContactForm'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import { socialLinks } from '@/data/socialLinks'
 
 const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; label: string }) => (
@@ -30,7 +28,6 @@ const Badge = ({ children }: { children: React.ReactNode }) => (
 export default function Contact() {
   return (
     <>
-      <Header />
       <main className="min-h-screen bg-white pt-16 md:pt-20">
         {/* Hero Section */}
         <section className="relative py-4 md:py-10 bg-gradient-to-b from-brand/10 via-brand/5 to-white overflow-hidden">
@@ -225,7 +222,6 @@ export default function Contact() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   )
 }
