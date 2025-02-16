@@ -131,12 +131,12 @@ export default function Header() {
                   ${scrolled 
                     ? 'text-brand hover:text-brand' 
                     : 'text-brand/90 hover:text-brand'
-                  } ${pathname === item.href ? 'text-brand font-medium' : ''}`
+                  } ${pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href)) ? 'text-brand font-medium' : ''}`
                 }
               >
                 {item.name}
                 <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-brand transform origin-left transition-transform duration-300 ${
-                  pathname === item.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href)) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                 }`} />
               </Link>
             ))}
@@ -188,7 +188,7 @@ export default function Header() {
                         href={item.href}
                         onClick={() => setIsMenuOpen(false)}
                         className={`flex items-center justify-between px-4 py-3 mx-2 my-1 rounded-xl transition-all duration-200
-                          ${pathname === item.href 
+                          ${pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href)) 
                             ? 'bg-brand/10 text-brand font-medium' 
                             : 'text-gray-600 hover:bg-gray-50 hover:text-brand active:bg-gray-100'
                           }`
@@ -196,7 +196,7 @@ export default function Header() {
                       >
                         <span className="text-sm">{item.name}</span>
                         <motion.div
-                          animate={{ x: pathname === item.href ? 0 : -5, opacity: pathname === item.href ? 1 : 0 }}
+                          animate={{ x: pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href)) ? 0 : -5, opacity: pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href)) ? 1 : 0 }}
                           transition={{ duration: 0.2 }}
                         >
                           <HiChevronRight className="w-4 h-4" />

@@ -8,18 +8,18 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/galerie',
-        destination: '/',
+        source: '/galerie-photos-ancien',
+        destination: '/galerie',
         permanent: true,
       },
       {
-        source: '/gallery',
-        destination: '/',
+        source: '/gallery-old',
+        destination: '/galerie',
         permanent: true,
       },
       {
-        source: '/photos',
-        destination: '/',
+        source: '/photos-ancien',
+        destination: '/galerie',
         permanent: true,
       }
     ]
