@@ -19,7 +19,7 @@ export async function GET() {
       }, { status: 500 });
     }
 
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&fields=name,rating,reviews,user_ratings_total&key=${API_KEY}`;
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${PLACE_ID}&fields=name,rating,reviews,user_ratings_total&language=fr&key=${API_KEY}`;
     
     const response = await fetch(url, {
       headers: {

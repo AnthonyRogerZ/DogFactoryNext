@@ -74,7 +74,7 @@ export default function Hero() {
                 Prendre RDV
               </Link>
               <Link 
-                href="/nos-prestations"
+                href="/prestations"
                 className="w-full sm:w-auto inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 border border-[#5B5F3D] text-sm sm:text-base font-medium rounded-md text-[#5B5F3D] hover:bg-[#5B5F3D]/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5B5F3D] transition-all duration-300"
               >
                 Nos Prestations

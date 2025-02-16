@@ -25,18 +25,20 @@ export default function Description() {
   const isOpen = useMemo(() => {
     const now = new Date()
     const day = now.getDay() // 0 = Dimanche, 1 = Lundi, etc.
-    const hour = now.getHours()
+    const hours = now.getHours()
+    const minutes = now.getMinutes()
+    const currentTime = hours + minutes / 60
 
     // Fermé le dimanche
     if (day === 0) return false
 
-    // Samedi : 9h-16h
+    // Samedi : 9h-17h
     if (day === 6) {
-      return hour >= 9 && hour < 16
+      return currentTime >= 9 && currentTime < 17
     }
 
     // Lundi-Vendredi : 9h-18h
-    return hour >= 9 && hour < 18
+    return currentTime >= 9 && currentTime < 18
   }, [])
 
   useEffect(() => {
@@ -199,66 +201,70 @@ export default function Description() {
 
               {/* Colonne de droite - Horaires */}
               <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-sm">
-                <div className="flex flex-col space-y-4">
-                  <h3 className="text-lg sm:text-xl font-bold text-[#5B5F3D] flex items-center gap-2">
-                    <FaClock className="w-4 h-4 sm:w-5 sm:h-5" />
-                    Nos horaires d'ouverture
-                  </h3>
+                <div className="flex items-center gap-2 mb-4">
+                  <FaClock className="w-5 h-5 text-[#5B5F3D]" />
+                  <h3 className="text-lg font-bold text-[#5B5F3D]">Nos horaires</h3>
+                  <div className={`ml-auto flex items-center gap-2 px-3 py-1 rounded-full text-sm ${
+                    isOpen 
+                      ? 'bg-green-100 text-green-700' 
+                      : 'bg-red-100 text-red-700'
+                  }`}>
+                    <div className={`w-2 h-2 rounded-full ${
+                      isOpen ? 'bg-green-500' : 'bg-red-500'
+                    }`} />
+                    <span>{isOpen ? 'Ouvert' : 'Fermé'}</span>
+                  </div>
+                </div>
 
-                  <div className="space-y-3">
-                    {/* Status ouvert/fermé */}
-                    <div className="bg-green-50 text-green-700 rounded-lg px-3 py-2 text-sm inline-flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                      Ouvert
-                    </div>
-
-                    {/* Horaires semaine */}
-                    <div className={`space-y-1 p-2 rounded-lg ${
-                      currentDay !== 'Dimanche' && currentDay !== 'Samedi'
-                        ? 'bg-gradient-to-r from-[#5B5F3D]/5 to-[#8B4513]/5'
-                        : ''
-                    }`}>
-                      <div className="text-gray-700 font-medium">Lundi à Vendredi</div>
-                      <div className="bg-white/50 rounded-lg px-3 py-2 text-sm text-gray-600 inline-block">
-                        9h00 – 18h00
-                      </div>
-                    </div>
-
-                    {/* Horaires samedi */}
-                    <div className={`space-y-1 p-2 rounded-lg ${
-                      currentDay === 'Samedi'
-                        ? 'bg-gradient-to-r from-[#5B5F3D]/5 to-[#8B4513]/5'
-                        : ''
-                    }`}>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-700 font-medium">Samedi</span>
-                        {currentDay === 'Samedi' && (
-                          <span className="text-xs bg-[#5B5F3D]/10 text-[#5B5F3D] px-2 py-0.5 rounded">Aujourd'hui</span>
-                        )}
-                      </div>
-                      <div className="bg-white/50 rounded-lg px-3 py-2 text-sm text-gray-600 inline-block">
-                        9h00 – 17h00
-                      </div>
-                    </div>
-
-                    {/* Horaires dimanche */}
-                    <div className={`space-y-1 p-2 rounded-lg ${
-                      currentDay === 'Dimanche'
-                        ? 'bg-gradient-to-r from-red-50 to-red-100/50'
-                        : ''
-                    }`}>
-                      <div className="text-gray-700 font-medium">Dimanche</div>
-                      <div className="text-red-500 text-sm">Fermé</div>
+                {/* Horaires semaine */}
+                <div className="space-y-3 md:space-y-4">
+                  <div className={`space-y-1 p-2 md:p-3 rounded-lg ${
+                    currentDay !== 'Dimanche' && currentDay !== 'Samedi'
+                      ? 'bg-gradient-to-r from-[#5B5F3D]/5 to-[#8B4513]/5'
+                      : ''
+                  }`}>
+                    <div className="text-gray-700 font-medium">Lundi à Vendredi</div>
+                    <div className="bg-white/50 rounded-lg px-3 py-2 text-sm text-gray-600 inline-block">
+                      9h00 – 18h00
                     </div>
                   </div>
 
+                  {/* Horaires samedi */}
+                  <div className={`space-y-1 p-2 md:p-3 rounded-lg ${
+                    currentDay === 'Samedi'
+                      ? 'bg-gradient-to-r from-[#5B5F3D]/5 to-[#8B4513]/5'
+                      : ''
+                  }`}>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-700 font-medium">Samedi</span>
+                      {currentDay === 'Samedi' && (
+                        <span className="text-xs bg-[#5B5F3D]/10 text-[#5B5F3D] px-2 py-0.5 rounded">Aujourd'hui</span>
+                      )}
+                    </div>
+                    <div className="bg-white/50 rounded-lg px-3 py-2 text-sm text-gray-600 inline-block">
+                      9h00 – 17h00
+                    </div>
+                  </div>
+
+                  {/* Horaires dimanche */}
+                  <div className={`space-y-1 p-2 md:p-3 rounded-lg ${
+                    currentDay === 'Dimanche'
+                      ? 'bg-gradient-to-r from-red-50 to-red-100/50'
+                      : ''
+                  }`}>
+                    <div className="text-gray-700 font-medium">Dimanche</div>
+                    <div className="text-red-500 text-sm">Fermé</div>
+                  </div>
+
                   {/* Note et téléphone */}
-                  <div className="space-y-3 pt-3 border-t border-[#5B5F3D]/10">
-                    <div className="text-sm text-gray-500">Fermé les jours fériés</div>
-                    <a href="tel:0658166105" className="inline-flex items-center gap-2 text-[#5B5F3D] font-medium hover:text-[#8B4513] transition-colors">
-                      <FaPhone className="w-4 h-4" />
-                      <span>06 58 16 61 05</span>
-                    </a>
+                  <div className="space-y-2 pt-3 md:pt-4 border-t border-[#5B5F3D]/10">
+                    <div className="text-sm text-gray-500 text-center">Fermé les jours fériés</div>
+                    <div className="flex justify-center">
+                      <a href="tel:0658166105" className="inline-flex items-center gap-2 text-[#5B5F3D] font-medium hover:text-[#8B4513] transition-colors">
+                        <FaPhone className="w-4 h-4" />
+                        <span>06 58 16 61 05</span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

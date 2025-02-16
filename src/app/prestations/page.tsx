@@ -242,8 +242,7 @@ export default function Prestations() {
                     <span>Bain et Séchage</span>
                   </h2>
                   <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                    Offrez à votre chien un bain relaxant et un séchage doux pour un pelage propre et soyeux. 
-                    Ce soin est idéal pour rafraîchir votre compagnon entre deux toilettages complets.
+                  Offrez à votre compagnon à quatre pattes un bain relaxant et un séchage doux pour un pelage propre et soyeux. Ce soin est idéal pour rafraîchir votre animal entre deux toilettages complets.
                   </p>
                   <div className="mt-4 flex flex-col items-center space-y-2">
                     <Badge>Douceur garantie</Badge>
