@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { FaTrashAlt, FaUndo } from 'react-icons/fa';
+import { FaTrashAlt, FaUndo, FaArrowLeft } from 'react-icons/fa';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import Link from 'next/link';
 
 interface DeletedPhoto {
   id: number;
@@ -75,9 +76,18 @@ export default function TrashPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-8">
-        Corbeille
-      </h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">
+          Corbeille
+        </h1>
+        <Link
+          href="/admin"
+          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+        >
+          <FaArrowLeft className="mr-2 h-4 w-4" />
+          Retour
+        </Link>
+      </div>
 
       {message.content && (
         <div className={`p-4 rounded-md mb-6 ${
