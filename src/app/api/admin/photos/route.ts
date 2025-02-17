@@ -6,10 +6,11 @@ import { prestationTypes } from '@/data/prestationTypes';
 // Nouvelle façon de configurer les limites de taille dans Next.js 13+
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
+export const revalidate = 0;
 
 export async function GET() {
   try {
-    console.log('Début GET /api/admin/photos');
+    console.log('Début GET /api/admin/photos - ' + new Date().toISOString());
     
     // Test de connexion à la base de données
     await prisma.$connect();
@@ -60,7 +61,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    console.log('Début POST /api/admin/photos');
+    console.log('Début POST /api/admin/photos - ' + new Date().toISOString());
     
     // Test de connexion à la base de données
     await prisma.$connect();
