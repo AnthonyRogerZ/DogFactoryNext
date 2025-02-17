@@ -6,6 +6,9 @@ const nextConfig = {
     unoptimized: true,
     dangerouslyAllowSVG: true,
   },
+  experimental: {
+    serverActions: true,
+  },
   async redirects() {
     return [
       {
@@ -45,6 +48,8 @@ const nextConfig = {
     },
     responseLimit: '10mb',
   },
+  // Configuration pour les routes dynamiques
+  output: 'standalone',
 }
 
 module.exports = nextConfig
