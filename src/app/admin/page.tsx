@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { prestationTypes } from '@/data/prestationTypes';
 import { FaPlus, FaEdit, FaTrash, FaTrashAlt } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
+import { prestationTypes } from '@/data/prestationTypes';
 
 interface PhotoUpload {
   before?: File;
@@ -41,7 +40,6 @@ export default function AdminPage() {
     try {
       const response = await fetch('/api/admin/photos');
       const data = await response.json();
-      console.log('Photos chargées:', data);
       if (data.success) {
         setBeforeAfterPhotos(data.photos);
       }
@@ -75,7 +73,7 @@ export default function AdminPage() {
 
       if (response.ok) {
         setMessage({ type: 'success', content: 'Photo déplacée dans la corbeille' });
-        fetchPhotos();
+        setBeforeAfterPhotos(photos => photos.filter(p => p.id !== id));
       } else {
         throw new Error('Erreur lors de la suppression');
       }
@@ -121,6 +119,16 @@ export default function AdminPage() {
 
       if (!response.ok) throw new Error('Erreur lors de l\'upload');
 
+      const data = await response.json();
+      
+      if (editingPhoto) {
+        setBeforeAfterPhotos(photos => 
+          photos.map(p => p.id === editingPhoto.id ? data.photo : p)
+        );
+      } else {
+        setBeforeAfterPhotos(photos => [data.photo, ...photos]);
+      }
+
       setMessage({
         type: 'success',
         content: editingPhoto ? 'Photo modifiée avec succès !' : 'Photos ajoutées avec succès !'
@@ -132,7 +140,6 @@ export default function AdminPage() {
       });
       setEditingPhoto(null);
       setShowUploadForm(false);
-      fetchPhotos();
       
     } catch (error) {
       setMessage({
@@ -146,16 +153,16 @@ export default function AdminPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <h1 className="text-2xl font-bold text-gray-900">
           Gestion des Photos Avant/Après
         </h1>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
           <Link
             href="/admin/corbeille"
-            className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+            className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 w-full sm:w-auto"
           >
-            <FaTrashAlt className="-ml-1 mr-2 h-5 w-5 text-gray-500" />
+            <FaTrashAlt className="mr-2 h-4 w-4 text-gray-500" />
             Corbeille
           </Link>
           <button
@@ -169,9 +176,9 @@ export default function AdminPage() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }
             }}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand hover:bg-brand/90"
+            className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand hover:bg-brand/90 w-full sm:w-auto"
           >
-            <FaPlus className="-ml-1 mr-2 h-5 w-5" />
+            <FaPlus className="mr-2 h-4 w-4" />
             Ajouter des photos
           </button>
         </div>
@@ -186,7 +193,7 @@ export default function AdminPage() {
       )}
 
       {showUploadForm && (
-        <div className="bg-white shadow-sm rounded-lg p-6 mb-8">
+        <div className="bg-white shadow-sm rounded-lg p-4 sm:p-6 mb-8">
           <h2 className="text-lg font-medium text-gray-900 mb-6">
             {editingPhoto ? 'Modifier la photo' : 'Ajouter une nouvelle photo'}
           </h2>
@@ -208,7 +215,7 @@ export default function AdminPage() {
               </select>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Photo Avant
@@ -221,7 +228,7 @@ export default function AdminPage() {
                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-brand/10 file:text-brand hover:file:bg-brand/20"
                   />
                   {(photoUpload.beforePreview || editingPhoto?.before) && (
-                    <div className="relative w-full h-64 rounded-lg overflow-hidden bg-gray-100">
+                    <div className="relative w-full h-40 sm:h-64 rounded-lg overflow-hidden bg-gray-100">
                       <Image
                         src={photoUpload.beforePreview || editingPhoto?.before || ''}
                         alt="Prévisualisation avant"
@@ -246,7 +253,7 @@ export default function AdminPage() {
                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-brand/10 file:text-brand hover:file:bg-brand/20"
                   />
                   {(photoUpload.afterPreview || editingPhoto?.after) && (
-                    <div className="relative w-full h-64 rounded-lg overflow-hidden bg-gray-100">
+                    <div className="relative w-full h-40 sm:h-64 rounded-lg overflow-hidden bg-gray-100">
                       <Image
                         src={photoUpload.afterPreview || editingPhoto?.after || ''}
                         alt="Prévisualisation après"
@@ -260,7 +267,7 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="flex justify-end gap-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-4">
               <button
                 type="button"
                 onClick={() => {
@@ -270,14 +277,14 @@ export default function AdminPage() {
                     prestationType: 'toilettage-complet'
                   });
                 }}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
               >
                 Annuler
               </button>
               <button
                 type="submit"
                 disabled={isUploading}
-                className={`inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand hover:bg-brand/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand ${
+                className={`w-full sm:w-auto inline-flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand hover:bg-brand/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand ${
                   isUploading ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
@@ -298,15 +305,14 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* Liste des photos existantes */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {beforeAfterPhotos.map((photo) => (
           <div
             key={photo.id}
-            className="bg-white rounded-lg shadow overflow-hidden group"
+            className="bg-white rounded-lg shadow overflow-hidden"
           >
             <div className="grid grid-cols-2 gap-4 p-4">
-              <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden">
+              <div className="relative w-full h-40 sm:h-64 rounded-lg overflow-hidden bg-gray-100">
                 <Image
                   src={photo.before}
                   alt="Avant"
@@ -314,11 +320,11 @@ export default function AdminPage() {
                   className="object-cover"
                   unoptimized
                 />
-                <div className="absolute top-2 left-2 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-xs font-medium shadow-sm">
+                <div className="absolute top-2 left-2 px-2 py-1 bg-white/90 backdrop-blur-sm rounded text-xs font-medium">
                   Avant
                 </div>
               </div>
-              <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden">
+              <div className="relative w-full h-40 sm:h-64 rounded-lg overflow-hidden bg-gray-100">
                 <Image
                   src={photo.after}
                   alt="Après"
@@ -326,7 +332,7 @@ export default function AdminPage() {
                   className="object-cover"
                   unoptimized
                 />
-                <div className="absolute top-2 right-2 px-3 py-1 bg-brand/90 backdrop-blur-sm text-white rounded-lg text-xs font-medium shadow-sm">
+                <div className="absolute top-2 right-2 px-2 py-1 bg-brand/90 backdrop-blur-sm text-white rounded text-xs font-medium">
                   Après
                 </div>
               </div>
@@ -336,15 +342,17 @@ export default function AdminPage() {
               <div className="flex justify-end gap-2">
                 <button
                   onClick={() => handleEdit(photo)}
-                  className="p-2 text-brand hover:bg-brand/10 rounded-full"
+                  className="inline-flex items-center px-3 py-2 border border-brand rounded-md text-sm font-medium text-brand hover:bg-brand/10"
                 >
-                  <FaEdit className="w-5 h-5" />
+                  <FaEdit className="w-4 h-4 mr-2" />
+                  Modifier
                 </button>
                 <button
                   onClick={() => handleDelete(photo.id)}
-                  className="p-2 text-red-500 hover:bg-red-50 rounded-full"
+                  className="inline-flex items-center px-3 py-2 border border-red-500 rounded-md text-sm font-medium text-red-500 hover:bg-red-50"
                 >
-                  <FaTrash className="w-5 h-5" />
+                  <FaTrash className="w-4 h-4 mr-2" />
+                  Supprimer
                 </button>
               </div>
             </div>

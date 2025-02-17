@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { FaTrashAlt, FaUndo } from 'react-icons/fa';
 import Image from 'next/image';
-import { FaTrashRestore, FaTrashAlt } from 'react-icons/fa';
-import Link from 'next/link';
+import { formatDistanceToNow } from 'date-fns';
+import { fr } from 'date-fns/locale';
 
-interface BeforeAfterPhoto {
+interface DeletedPhoto {
   id: number;
   before: string;
   after: string;
@@ -16,7 +16,7 @@ interface BeforeAfterPhoto {
 }
 
 export default function TrashPage() {
-  const [deletedPhotos, setDeletedPhotos] = useState<BeforeAfterPhoto[]>([]);
+  const [deletedPhotos, setDeletedPhotos] = useState<DeletedPhoto[]>([]);
   const [message, setMessage] = useState({ type: '', content: '' });
 
   useEffect(() => {
@@ -38,12 +38,12 @@ export default function TrashPage() {
   const handleRestore = async (id: number) => {
     try {
       const response = await fetch(`/api/admin/photos/trash/${id}/restore`, {
-        method: 'POST',
+        method: 'POST'
       });
 
       if (response.ok) {
         setMessage({ type: 'success', content: 'Photo restaurée avec succès' });
-        fetchDeletedPhotos();
+        setDeletedPhotos(photos => photos.filter(p => p.id !== id));
       } else {
         throw new Error('Erreur lors de la restauration');
       }
@@ -52,19 +52,19 @@ export default function TrashPage() {
     }
   };
 
-  const handlePermanentDelete = async (id: number) => {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer définitivement cette photo ? Cette action est irréversible.')) {
+  const handleDelete = async (id: number) => {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer définitivement cette photo ?')) {
       return;
     }
 
     try {
       const response = await fetch(`/api/admin/photos/trash/${id}`, {
-        method: 'DELETE',
+        method: 'DELETE'
       });
 
       if (response.ok) {
         setMessage({ type: 'success', content: 'Photo supprimée définitivement' });
-        fetchDeletedPhotos();
+        setDeletedPhotos(photos => photos.filter(p => p.id !== id));
       } else {
         throw new Error('Erreur lors de la suppression');
       }
@@ -75,17 +75,9 @@ export default function TrashPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">
-          Corbeille
-        </h1>
-        <Link
-          href="/admin"
-          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-        >
-          Retour à la galerie
-        </Link>
-      </div>
+      <h1 className="text-2xl font-bold text-gray-900 mb-8">
+        Corbeille
+      </h1>
 
       {message.content && (
         <div className={`p-4 rounded-md mb-6 ${
@@ -95,71 +87,75 @@ export default function TrashPage() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {deletedPhotos.map((photo) => (
-          <motion.div
-            key={photo.id}
-            className="bg-white rounded-lg shadow overflow-hidden group"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <div className="grid grid-cols-2 gap-4 p-4">
-              <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden">
-                <Image
-                  src={photo.before}
-                  alt="Avant"
-                  fill
-                  className="object-cover opacity-75"
-                  unoptimized
-                />
-                <div className="absolute top-2 left-2 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-xs font-medium shadow-sm">
-                  Avant
+      {deletedPhotos.length === 0 ? (
+        <div className="text-center py-12">
+          <FaTrashAlt className="mx-auto h-12 w-12 text-gray-400" />
+          <h3 className="mt-2 text-sm font-medium text-gray-900">La corbeille est vide</h3>
+          <p className="mt-1 text-sm text-gray-500">Les photos supprimées apparaîtront ici.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {deletedPhotos.map((photo) => (
+            <div
+              key={photo.id}
+              className="bg-white rounded-lg shadow overflow-hidden"
+            >
+              <div className="grid grid-cols-2 gap-4 p-4">
+                <div className="relative w-full h-40 md:h-64 rounded-lg overflow-hidden bg-gray-100">
+                  <Image
+                    src={photo.before}
+                    alt="Avant"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                  <div className="absolute top-2 left-2 px-2 py-1 bg-white/90 backdrop-blur-sm rounded text-xs font-medium">
+                    Avant
+                  </div>
+                </div>
+                <div className="relative w-full h-40 md:h-64 rounded-lg overflow-hidden bg-gray-100">
+                  <Image
+                    src={photo.after}
+                    alt="Après"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                  <div className="absolute top-2 right-2 px-2 py-1 bg-brand/90 backdrop-blur-sm text-white rounded text-xs font-medium">
+                    Après
+                  </div>
                 </div>
               </div>
-              <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden">
-                <Image
-                  src={photo.after}
-                  alt="Après"
-                  fill
-                  className="object-cover opacity-75"
-                  unoptimized
-                />
-                <div className="absolute top-2 right-2 px-3 py-1 bg-brand/90 backdrop-blur-sm text-white rounded-lg text-xs font-medium shadow-sm">
-                  Après
+              <div className="p-4 border-t border-gray-100">
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-sm text-gray-500">
+                    {photo.description}
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    Supprimée {formatDistanceToNow(new Date(photo.deletedAt), { addSuffix: true, locale: fr })}
+                  </p>
+                </div>
+                <div className="flex justify-end gap-2">
+                  <button
+                    onClick={() => handleRestore(photo.id)}
+                    className="inline-flex items-center px-3 py-2 border border-brand rounded-md text-sm font-medium text-brand hover:bg-brand/10"
+                  >
+                    <FaUndo className="w-4 h-4 mr-2" />
+                    Restaurer
+                  </button>
+                  <button
+                    onClick={() => handleDelete(photo.id)}
+                    className="inline-flex items-center px-3 py-2 border border-red-500 rounded-md text-sm font-medium text-red-500 hover:bg-red-50"
+                  >
+                    <FaTrashAlt className="w-4 h-4 mr-2" />
+                    Supprimer
+                  </button>
                 </div>
               </div>
             </div>
-            <div className="p-4 border-t border-gray-100">
-              <p className="text-sm text-gray-600 mb-2">{photo.description}</p>
-              <p className="text-xs text-gray-400 mb-4">
-                Supprimé le {new Date(photo.deletedAt).toLocaleDateString()}
-              </p>
-              <div className="flex justify-end gap-2">
-                <button
-                  onClick={() => handleRestore(photo.id)}
-                  className="p-2 text-green-500 hover:bg-green-50 rounded-full"
-                  title="Restaurer"
-                >
-                  <FaTrashRestore className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => handlePermanentDelete(photo.id)}
-                  className="p-2 text-red-500 hover:bg-red-50 rounded-full"
-                  title="Supprimer définitivement"
-                >
-                  <FaTrashAlt className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-
-        {deletedPhotos.length === 0 && (
-          <div className="col-span-2 text-center py-12">
-            <p className="text-gray-500">La corbeille est vide</p>
-          </div>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
