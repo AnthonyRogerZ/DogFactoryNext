@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     console.log('Début GET /api/admin/photos/trash');
@@ -8,7 +10,6 @@ export async function GET() {
     // Charger les photos supprimées
     const deletedPhotos = await prisma.photo.findMany({
       where: {
-        category: 'beforeAfter',
         isDeleted: true
       },
       orderBy: {
@@ -25,7 +26,7 @@ export async function GET() {
       after: photo.afterImage || '',
       description: photo.description || '',
       prestationType: photo.prestationType || 'toilettage-complet',
-      deletedAt: photo.deletedAt
+      deletedAt: photo.deletedAt?.toISOString() || new Date().toISOString()
     }));
 
     return NextResponse.json({

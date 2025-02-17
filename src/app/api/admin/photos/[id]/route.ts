@@ -3,6 +3,8 @@ import { prisma } from '@/lib/prisma';
 import { uploadImage } from '@/lib/cloudinary';
 import { prestationTypes } from '@/data/prestationTypes';
 
+export const dynamic = 'force-dynamic';
+
 export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }

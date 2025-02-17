@@ -82,6 +82,25 @@ export default function AdminPage() {
     }
   };
 
+  const handleRestore = async (id: number) => {
+    try {
+      const response = await fetch(`/api/admin/photos/trash/${id}/restore`, {
+        method: 'POST'
+      });
+
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setMessage({ type: 'success', content: 'Photo restaurée avec succès' });
+        // Ajouter la photo restaurée à la liste
+        setBeforeAfterPhotos(photos => [data.photo, ...photos]);
+      } else {
+        throw new Error('Erreur lors de la restauration');
+      }
+    } catch (error) {
+      setMessage({ type: 'error', content: 'Erreur lors de la restauration de la photo' });
+    }
+  };
+
   const handleEdit = (photo: BeforeAfterPhoto) => {
     setEditingPhoto(photo);
     setPhotoUpload({
