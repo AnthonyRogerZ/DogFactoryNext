@@ -1,46 +1,55 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { signToken } from '@/lib/auth';
+import { NextResponse } from 'next/server';
+import { SignJWT } from 'jose';
+import { cookies } from 'next/headers';
 
-const ADMIN_USERNAME = 'admin';
-const ADMIN_PASSWORD = 'password';
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
-export async function POST(req: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const body = await req.json();
-    const { username, password } = body;
+    const { username, password } = await request.json();
 
-    console.log('Tentative de connexion:', { username });
+    console.log('Login attempt:', { username });
 
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      const token = await signToken({ username });
-      
-      const response = NextResponse.json({ 
-        success: true,
-        message: 'Connexion réussie'
-      });
+    // Vérifier les identifiants
+    const isValidUsername = username === ADMIN_USERNAME;
+    const isValidPassword = password === ADMIN_PASSWORD;
 
-      // Définir le cookie avec les bons paramètres
-      response.cookies.set('auth_token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/',
-        maxAge: 3600 // 1 hour
-      });
+    console.log('Credentials check:', { 
+      expectedUsername: ADMIN_USERNAME,
+      expectedPassword: ADMIN_PASSWORD,
+      isValidUsername,
+      isValidPassword 
+    });
 
-      console.log('Token généré et cookie défini');
-      return response;
+    if (!isValidUsername || !isValidPassword) {
+      console.log('Invalid credentials');
+      return NextResponse.json(
+        { success: false, error: 'Identifiants invalides' },
+        { status: 401 }
+      );
     }
 
-    console.log('Identifiants invalides');
-    return NextResponse.json(
-      { success: false, error: 'Identifiants invalides' },
-      { status: 401 }
-    );
+    // Créer le token JWT
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const token = await new SignJWT({ username })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setExpirationTime('24h')
+      .sign(secret);
+
+    // Définir le cookie
+    cookies().set('auth_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 // 24 heures
+    });
+
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Erreur lors de la connexion:', error);
+    console.error('Login error:', error);
     return NextResponse.json(
-      { success: false, error: 'Erreur interne du serveur' },
+      { success: false, error: 'Erreur lors de la connexion' },
       { status: 500 }
     );
   }
