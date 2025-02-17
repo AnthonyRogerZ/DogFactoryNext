@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { prismaClient as prisma } from '@/lib/prisma-client';
 import { uploadImage } from '@/lib/cloudinary';
 import { prestationTypes } from '@/data/prestationTypes';
 
@@ -10,6 +10,10 @@ export const maxDuration = 60;
 export async function GET() {
   try {
     console.log('Début GET /api/admin/photos');
+    
+    // Test de connexion à la base de données
+    await prisma.$connect();
+    console.log('Connexion à la base de données réussie');
     
     // Essayer de charger les photos de la base de données
     const dbPhotos = await prisma.photo.findMany({
@@ -46,15 +50,21 @@ export async function GET() {
   } catch (error) {
     console.error('Erreur GET /api/admin/photos:', error);
     return NextResponse.json(
-      { success: false, error: 'Erreur lors de la récupération des photos' },
+      { success: false, error: `Erreur lors de la récupération des photos: ${error.message}` },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
 export async function POST(request: Request) {
   try {
     console.log('Début POST /api/admin/photos');
+    
+    // Test de connexion à la base de données
+    await prisma.$connect();
+    console.log('Connexion à la base de données réussie');
     
     const formData = await request.formData();
     const before = formData.get('before') as File;
@@ -87,52 +97,62 @@ export async function POST(request: Request) {
 
     console.log('Upload des fichiers sur Cloudinary...');
     
-    // Convertir les fichiers en Buffer pour Cloudinary
-    const beforeBuffer = Buffer.from(await before.arrayBuffer());
-    const afterBuffer = Buffer.from(await after.arrayBuffer());
+    try {
+      // Convertir les fichiers en Buffer pour Cloudinary
+      const beforeBuffer = Buffer.from(await before.arrayBuffer());
+      const afterBuffer = Buffer.from(await after.arrayBuffer());
 
-    // Upload sur Cloudinary
-    const [beforeUrl, afterUrl] = await Promise.all([
-      uploadImage(beforeBuffer, 'avantapres'),
-      uploadImage(afterBuffer, 'avantapres')
-    ]);
+      // Upload sur Cloudinary
+      const [beforeUrl, afterUrl] = await Promise.all([
+        uploadImage(beforeBuffer, 'avantapres'),
+        uploadImage(afterBuffer, 'avantapres')
+      ]);
 
-    console.log('URLs Cloudinary:', { beforeUrl, afterUrl });
+      console.log('URLs Cloudinary:', { beforeUrl, afterUrl });
 
-    // Trouver le type de prestation
-    const prestationTypeObj = prestationTypes.find(type => type.id === prestationType);
+      // Trouver le type de prestation
+      const prestationTypeObj = prestationTypes.find(type => type.id === prestationType);
 
-    console.log('Création de l\'entrée dans la base de données...');
-    // Créer l'entrée dans la base de données
-    const photo = await prisma.photo.create({
-      data: {
-        category: 'beforeAfter',
-        beforeImage: beforeUrl,
-        afterImage: afterUrl,
+      console.log('Création de l\'entrée dans la base de données...');
+      // Créer l'entrée dans la base de données
+      const photo = await prisma.photo.create({
+        data: {
+          category: 'beforeAfter',
+          beforeImage: beforeUrl,
+          afterImage: afterUrl,
+          description: prestationTypeObj?.name || '',
+          prestationType
+        }
+      });
+      console.log('Photo créée dans la base de données:', photo);
+
+      // Retourner la photo avec le bon format
+      const formattedPhoto = {
+        id: photo.id,
+        before: photo.beforeImage || '',
+        after: photo.afterImage || '',
         description: prestationTypeObj?.name || '',
-        prestationType
-      }
-    });
-    console.log('Photo créée dans la base de données:', photo);
+        prestationType: photo.prestationType || 'toilettage-complet'
+      };
 
-    // Retourner la photo avec le bon format
-    const formattedPhoto = {
-      id: photo.id,
-      before: photo.beforeImage || '',
-      after: photo.afterImage || '',
-      description: prestationTypeObj?.name || '',
-      prestationType: photo.prestationType || 'toilettage-complet'
-    };
-
-    return NextResponse.json({
-      success: true,
-      photo: formattedPhoto
-    });
+      return NextResponse.json({
+        success: true,
+        photo: formattedPhoto
+      });
+    } catch (uploadError) {
+      console.error('Erreur lors de l\'upload:', uploadError);
+      return NextResponse.json(
+        { success: false, error: `Erreur lors de l'upload: ${uploadError.message}` },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error('Erreur POST /api/admin/photos:', error);
     return NextResponse.json(
       { success: false, error: `Erreur lors de l'ajout de la photo: ${error.message}` },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }
