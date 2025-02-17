@@ -3,6 +3,14 @@ import { prisma } from '@/lib/prisma';
 import { uploadImage } from '@/lib/cloudinary';
 import { prestationTypes } from '@/data/prestationTypes';
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};
+
 export async function GET() {
   try {
     console.log('Début GET /api/admin/photos');
@@ -60,13 +68,24 @@ export async function POST(request: Request) {
     console.log('Données reçues:', { 
       beforeName: before?.name,
       afterName: after?.name,
-      prestationType 
+      prestationType,
+      beforeSize: before?.size,
+      afterSize: after?.size
     });
 
     if (!before || !after) {
       return NextResponse.json(
         { success: false, error: 'Les photos avant et après sont requises' },
         { status: 400 }
+      );
+    }
+
+    // Vérifier la taille des fichiers
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (before.size > maxSize || after.size > maxSize) {
+      return NextResponse.json(
+        { success: false, error: 'Les images doivent faire moins de 10MB chacune' },
+        { status: 413 }
       );
     }
 

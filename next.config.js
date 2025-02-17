@@ -2,23 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['maps.googleapis.com', 'localhost'],
+    domains: ['res.cloudinary.com'],
     unoptimized: true,
     dangerouslyAllowSVG: true,
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3001',
-        pathname: '/**',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3002',
-        pathname: '/**',
-      }
-    ],
   },
   async redirects() {
     return [
@@ -38,6 +24,26 @@ const nextConfig = {
         permanent: true,
       }
     ]
+  },
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+        ],
+      },
+    ];
+  },
+  // Augmenter la taille maximale des requêtes
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+    responseLimit: '10mb',
   },
 }
 
