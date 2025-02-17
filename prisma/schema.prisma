@@ -1,0 +1,25 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Photo {
+  id            Int       @id @default(autoincrement())
+  category      String
+  beforeImage   String?
+  afterImage    String?
+  image         String?
+  description   String?
+  prestationType String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+  isDeleted     Boolean   @default(false)
+}

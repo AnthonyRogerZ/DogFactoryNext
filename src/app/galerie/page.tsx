@@ -4,7 +4,9 @@ import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, EffectCoverflow, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import ImageModal from '@/components/ImageModal';
+import Link from 'next/link';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -14,45 +16,66 @@ import 'swiper/css/effect-coverflow';
 
 // Types
 interface BeforeAfterImage {
+  id: number;
   before: string;
   after: string;
   description: string;
+  prestationType: string;
 }
+
+const salonImages = [
+  '/images/salon/optimized_image_2.jpg',
+  '/images/salon/optimized_image_3.jpg',
+  '/images/salon/optimized_image_4.jpg',
+  '/images/salon/optimized_image_5.jpg',
+  '/images/salon/optimized_image_6.jpg',
+  '/images/salon/optimized_image_7.jpg',
+  '/images/salon/optimized_image_8.jpg',
+  '/images/salon/optimized_image_9.jpg',
+  '/images/salon/optimized_image_10.jpg',
+  '/images/salon/final_IMG_2586.jpg',
+  '/images/salon/final_IMG_2591.jpg'
+];
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentImagePair, setCurrentImagePair] = useState<{ before: string; after: string } | null>(null);
+  const [isBeforeImage, setIsBeforeImage] = useState(true);
+  const [beforeAfterPhotos, setBeforeAfterPhotos] = useState<BeforeAfterImage[]>([]);
 
-  const salonImages = [
-    '/images/salon/optimized_image_2.jpg',
-    '/images/salon/optimized_image_3.jpg',
-    '/images/salon/optimized_image_4.jpg',
-    '/images/salon/optimized_image_5.jpg',
-    '/images/salon/optimized_image_6.jpg',
-    '/images/salon/optimized_image_7.jpg',
-    '/images/salon/optimized_image_8.jpg',
-    '/images/salon/optimized_image_9.jpg',
-    '/images/salon/optimized_image_10.jpg',
-    '/images/salon/final_IMG_2586.jpg',
-    '/images/salon/final_IMG_2591.jpg'
-  ];
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      try {
+        const response = await fetch('/api/admin/photos');
+        const data = await response.json();
+        console.log('Photos chargées:', data);
+        if (data.success) {
+          setBeforeAfterPhotos(data.photos);
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des photos:', error);
+      }
+    };
 
-  const beforeAfterImages: BeforeAfterImage[] = [
-    {
-      before: '/images/avantapres/output-1-1.png.webp',
-      after: '/images/avantapres/enhanced_after_montage-768x522.png.webp',
-      description: 'Toilettage complet avec brushing'
-    },
-    {
-      before: '/images/avantapres/output-2.png',
-      after: '/images/avantapres/enhanced_after_montage-768x522.png.webp',
-      description: 'Mise en beauté et coupe'
-    },
-    {
-      before: '/images/avantapres/output-2.png',
-      after: '/images/avantapres/output-1-1.png.webp',
-      description: 'Transformation complète'
+    fetchPhotos();
+  }, []);
+
+  const handleImageClick = (photo: BeforeAfterImage, isBeforePhoto: boolean) => {
+    setCurrentImagePair({ before: photo.before, after: photo.after });
+    setIsBeforeImage(isBeforePhoto);
+  };
+
+  const handleNext = () => {
+    if (currentImagePair) {
+      setIsBeforeImage(!isBeforeImage);
     }
-  ];
+  };
+
+  const handlePrev = () => {
+    if (currentImagePair) {
+      setIsBeforeImage(!isBeforeImage);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-brand/5 via-white to-gray-50 pt-[72px] sm:pt-[80px]">
@@ -159,10 +182,9 @@ export default function Gallery() {
             </motion.div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-12 md:h-24 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
-      {/* Salon Photos */}
+      {/* Salon Photos Section */}
       <section className="py-4 sm:py-6 relative">
         <div className="container mx-auto px-4">
           <motion.div
@@ -192,8 +214,8 @@ export default function Gallery() {
                 pauseOnMouseEnter: true,
               }}
               coverflowEffect={{
-                stretch: 0,
                 rotate: 50,
+                stretch: 0,
                 depth: 100,
                 modifier: 1,
                 slideShadows: true,
@@ -202,18 +224,19 @@ export default function Gallery() {
                 clickable: true,
               }}
               navigation={true}
-              modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
-              className="w-full py-8 md:py-12"
+              modules={[Navigation, Pagination, EffectCoverflow, Autoplay]}
+              className="mySwiper"
             >
               {salonImages.map((image, index) => (
-                <SwiperSlide key={index} className="w-full max-w-2xl">
-                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+                <SwiperSlide key={index} className="max-w-2xl">
+                  <div className="relative w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg">
                     <Image
                       src={image}
-                      alt={`Notre salon ${index + 1}`}
+                      alt={`Photo du salon ${index + 1}`}
                       fill
                       className="object-cover"
                       onClick={() => setSelectedImage(image)}
+                      unoptimized
                     />
                   </div>
                 </SwiperSlide>
@@ -224,48 +247,57 @@ export default function Gallery() {
       </section>
 
       {/* Before/After Section */}
-      <section className="py-4 sm:py-6 bg-gradient-to-b from-white to-brand/5 relative">
+      <section className="py-8 md:py-12">
         <div className="container mx-auto px-4">
           <motion.div
-            className="max-w-xl mx-auto text-center mb-4 md:mb-6"
+            className="max-w-xl mx-auto text-center mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-xl md:text-3xl font-bold text-brand mb-1 md:mb-2">Avant / Après</h2>
-            <p className="text-sm md:text-base text-gray-600">Découvrez les transformations de nos clients à quatre pattes</p>
+            <h2 className="text-2xl md:text-4xl font-bold text-brand mb-4">
+              Avant / Après
+            </h2>
+            <p className="text-sm md:text-lg text-gray-600">
+              Découvrez les transformations de nos amis à quatre pattes
+            </p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
-            {beforeAfterImages.map((item, index) => (
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {beforeAfterPhotos.map((photo) => (
               <motion.div
-                key={index}
+                key={photo.id}
                 className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 hover:border-brand/20 group"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.6 }}
               >
                 <div className="grid grid-cols-2 gap-3 p-3">
-                  <div className="relative aspect-square rounded-xl overflow-hidden">
+                  <div className="relative w-full h-[200px] md:h-[300px] rounded-xl overflow-hidden">
                     <Image
-                      src={item.before}
+                      src={photo.before}
                       alt="Avant"
-                      width={300}
-                      height={300}
-                      className="object-cover w-full h-full transform transition-transform duration-300 group-hover:scale-105"
-                      onClick={() => setSelectedImage(item.before)}
+                      fill
+                      className="object-cover transform transition-transform duration-300 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority
+                      onClick={() => handleImageClick(photo, true)}
+                      unoptimized
                     />
                     <div className="absolute top-2 left-2 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-xs font-medium shadow-sm">
                       Avant
                     </div>
                   </div>
-                  <div className="relative aspect-square rounded-xl overflow-hidden">
+                  <div className="relative w-full h-[200px] md:h-[300px] rounded-xl overflow-hidden">
                     <Image
-                      src={item.after}
+                      src={photo.after}
                       alt="Après"
-                      width={300}
-                      height={300}
-                      className="object-cover w-full h-full transform transition-transform duration-300 group-hover:scale-105"
-                      onClick={() => setSelectedImage(item.after)}
+                      fill
+                      className="object-cover transform transition-transform duration-300 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority
+                      onClick={() => handleImageClick(photo, false)}
+                      unoptimized
                     />
                     <div className="absolute top-2 right-2 px-3 py-1 bg-brand/90 backdrop-blur-sm text-white rounded-lg text-xs font-medium shadow-sm">
                       Après
@@ -273,62 +305,66 @@ export default function Gallery() {
                   </div>
                 </div>
                 <div className="p-4 border-t border-gray-100 bg-gradient-to-b from-gray-50/50 to-white">
-                  <p className="text-sm text-gray-600 text-center">{item.description}</p>
+                  <p className="text-sm text-gray-500 text-center">{photo.description}</p>
                 </div>
               </motion.div>
             ))}
           </div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-50 to-transparent"></div>
-      </section>
 
-      {/* Call to Action */}
-      <section className="py-4 sm:py-6 bg-gray-50">
-        <div className="container mx-auto px-4">
+          {/* Call to Action Section */}
           <motion.div
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-xl mx-auto text-center mt-16"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-xl md:text-3xl font-bold text-brand mb-4">Envie d'une transformation ?</h2>
-            <p className="text-sm md:text-base text-gray-600 mb-8">Prenez rendez-vous pour le bien-être de votre compagnon</p>
-            <motion.a
+            <h2 className="text-2xl md:text-3xl font-bold text-brand mb-4">
+              Envie d'une transformation ?
+            </h2>
+            <p className="text-sm md:text-lg text-gray-600 mb-8">
+              Prenez rendez-vous pour le bien-être de votre compagnon
+            </p>
+            <Link
               href="/contact"
-              className="inline-flex items-center justify-center px-6 py-3 bg-brand text-white text-sm md:text-base font-medium rounded-full hover:bg-brand/90 transition-colors group gap-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-brand hover:bg-brand/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand"
             >
               Prendre rendez-vous
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </motion.a>
+            </Link>
           </motion.div>
         </div>
       </section>
 
       {/* Image Modal */}
+      {currentImagePair && (
+        <ImageModal
+          images={[
+            { src: currentImagePair.before, alt: 'Avant' },
+            { src: currentImagePair.after, alt: 'Après' }
+          ]}
+          currentIndex={isBeforeImage ? 0 : 1}
+          onClose={() => {
+            setCurrentImagePair(null);
+            setIsBeforeImage(true);
+          }}
+          onNext={handleNext}
+          onPrev={handlePrev}
+        />
+      )}
+
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-5xl w-full h-full">
+          <div className="relative w-full max-w-4xl h-[80vh]">
             <Image
               src={selectedImage}
               alt="Image agrandie"
               fill
               className="object-contain"
+              priority
+              unoptimized
             />
-            <button
-              className="absolute top-4 right-4 text-white hover:text-gray-300"
-              onClick={() => setSelectedImage(null)}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
           </div>
         </div>
       )}

@@ -1,0 +1,30 @@
+{
+  "beforeAfter": [
+    {
+      "before": "/images/avantapres/output-1-1.png.webp",
+      "after": "/images/avantapres/enhanced_after_montage-768x522.png.webp",
+      "description": "Toilettage complet avec brushing"
+    },
+    {
+      "before": "/images/avantapres/output-2.png",
+      "after": "/images/avantapres/enhanced_after_montage-768x522.png.webp",
+      "description": "Mise en beauté et coupe"
+    }
+  ],
+  "salon": [
+    "/images/salon/optimized_image_2.jpg",
+    "/images/salon/optimized_image_3.jpg",
+    "/images/salon/optimized_image_4.jpg",
+    "/images/salon/optimized_image_5.jpg",
+    "/images/salon/optimized_image_6.jpg",
+    "/images/salon/optimized_image_7.jpg",
+    "/images/salon/optimized_image_8.jpg",
+    "/images/salon/optimized_image_9.jpg",
+    "/images/salon/optimized_image_10.jpg",
+    "/images/salon/final_IMG_2586.jpg",
+    "/images/salon/final_IMG_2591.jpg"
+  ],
+  "epilation": [
+    "/images/épilation/épilation.webp"
+  ]
+}
