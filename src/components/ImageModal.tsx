@@ -23,7 +23,7 @@ export default function ImageModal({
   const handlers = useSwipeable({
     onSwipedLeft: onNext,
     onSwipedRight: onPrev,
-    preventDefaultTouchmoveEvent: true,
+    delta: 10,
     trackMouse: true
   });
 
