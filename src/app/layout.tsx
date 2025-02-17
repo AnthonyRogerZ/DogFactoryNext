@@ -7,13 +7,13 @@ import Footer from '@/components/Footer';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Dog Factory - Toilettage et Soins pour Chiens à Annecy',
-  description: 'Dog Factory, votre salon de toilettage professionnel à Annecy. Services de toilettage, soins et conseils pour le bien-être de votre chien.',
-  keywords: 'toilettage chien, salon toilettage annecy, dog factory, soins chiens, toiletteur professionnel',
+  metadataBase: new URL('https://dogfactory.fr'),
+  title: 'Dog Factory - Salon de toilettage à Genas',
+  description: 'Salon de toilettage professionnel à Genas. Prenez rendez-vous pour le bien-être de votre compagnon.',
   openGraph: {
-    title: 'Dog Factory - Toilettage Professionnel à Annecy',
-    description: 'Salon de toilettage professionnel à Annecy. Services de qualité pour le bien-être de votre chien.',
-    url: 'https://www.dogfactory.fr',
+    title: 'Dog Factory - Salon de toilettage à Genas',
+    description: 'Salon de toilettage professionnel à Genas. Prenez rendez-vous pour le bien-être de votre compagnon.',
+    url: 'https://dogfactory.fr',
     siteName: 'Dog Factory',
     locale: 'fr_FR',
     type: 'website',
@@ -42,11 +42,9 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={inter.className}>
-        <div className="min-h-screen flex flex-col">
+        <div className="flex flex-col">
           <Header />
-          <main className="flex-grow">
-            {children}
-          </main>
+          <main className="flex-grow min-h-screen">{children}</main>
           <Footer />
         </div>
       </body>

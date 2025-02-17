@@ -1,32 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   images: {
     domains: ['res.cloudinary.com'],
     unoptimized: true,
-    dangerouslyAllowSVG: true,
-  },
-  experimental: {
-    serverActions: true,
-  },
-  async redirects() {
-    return [
-      {
-        source: '/galerie-photos-ancien',
-        destination: '/galerie',
-        permanent: true,
-      },
-      {
-        source: '/gallery-old',
-        destination: '/galerie',
-        permanent: true,
-      },
-      {
-        source: '/photos-ancien',
-        destination: '/galerie',
-        permanent: true,
-      }
-    ]
   },
   async headers() {
     return [
@@ -41,14 +17,6 @@ const nextConfig = {
       },
     ];
   },
-  // Augmenter la taille maximale des requêtes
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb',
-    },
-    responseLimit: '10mb',
-  },
-  // Configuration pour les routes dynamiques
   output: 'standalone',
 }
 
