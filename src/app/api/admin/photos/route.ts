@@ -5,6 +5,8 @@ import { prestationTypes } from '@/data/prestationTypes';
 
 export async function GET() {
   try {
+    console.log('Début GET /api/admin/photos');
+    
     // Essayer de charger les photos de la base de données
     const dbPhotos = await prisma.photo.findMany({
       where: {
@@ -16,7 +18,7 @@ export async function GET() {
       }
     });
 
-    console.log('Photos de la base de données:', dbPhotos);
+    console.log('Photos trouvées dans la base de données:', dbPhotos);
 
     // Convertir les photos de la base de données au bon format
     const formattedPhotos = dbPhotos.map(photo => {
@@ -31,12 +33,14 @@ export async function GET() {
       };
     });
 
+    console.log('Photos formatées:', formattedPhotos);
+
     return NextResponse.json({
       success: true,
       photos: formattedPhotos
     });
   } catch (error) {
-    console.error('Erreur lors de la récupération des photos:', error);
+    console.error('Erreur GET /api/admin/photos:', error);
     return NextResponse.json(
       { success: false, error: 'Erreur lors de la récupération des photos' },
       { status: 500 }
@@ -46,10 +50,18 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    console.log('Début POST /api/admin/photos');
+    
     const formData = await request.formData();
     const before = formData.get('before') as File;
     const after = formData.get('after') as File;
     const prestationType = formData.get('prestationType') as string;
+
+    console.log('Données reçues:', { 
+      beforeName: before?.name,
+      afterName: after?.name,
+      prestationType 
+    });
 
     if (!before || !after) {
       return NextResponse.json(
@@ -102,9 +114,9 @@ export async function POST(request: Request) {
       photo: formattedPhoto
     });
   } catch (error) {
-    console.error('Erreur lors de l\'ajout de la photo:', error);
+    console.error('Erreur POST /api/admin/photos:', error);
     return NextResponse.json(
-      { success: false, error: 'Erreur lors de l\'ajout de la photo' },
+      { success: false, error: `Erreur lors de l'ajout de la photo: ${error.message}` },
       { status: 500 }
     );
   }
