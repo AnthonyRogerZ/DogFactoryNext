@@ -8,6 +8,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    console.log('Début DELETE /api/admin/photos/[id]', params);
     const id = parseInt(params.id);
 
     // Au lieu de supprimer, marquer comme supprimé
@@ -18,6 +19,8 @@ export async function DELETE(
         deletedAt: new Date()
       }
     });
+
+    console.log('Photo marquée comme supprimée:', photo);
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -53,13 +56,10 @@ export async function PUT(
       );
     }
 
-    // Trouver le type de prestation
-    const prestationTypeObj = prestationTypes.find(type => type.id === prestationType);
-
     // Préparer les données de mise à jour
     const updateData: any = {
       prestationType,
-      description: prestationTypeObj?.name || ''
+      description: prestationType // Utiliser le type de prestation comme description
     };
 
     // Si de nouvelles images sont fournies, les uploader sur Cloudinary
@@ -86,7 +86,7 @@ export async function PUT(
       id: updatedPhoto.id,
       before: updatedPhoto.beforeImage || '',
       after: updatedPhoto.afterImage || '',
-      description: prestationTypeObj?.name || '',
+      description: updatedPhoto.description || '',
       prestationType: updatedPhoto.prestationType || 'toilettage-complet'
     };
 
