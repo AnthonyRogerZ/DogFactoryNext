@@ -3,13 +3,9 @@ import { prisma } from '@/lib/prisma';
 import { uploadImage } from '@/lib/cloudinary';
 import { prestationTypes } from '@/data/prestationTypes';
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb',
-    },
-  },
-};
+// Nouvelle façon de configurer les limites de taille dans Next.js 13+
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 export async function GET() {
   try {
