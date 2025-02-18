@@ -3,13 +3,13 @@ import type { NextRequest } from 'next/server';
 import { verifyToken } from '@/lib/auth';
 
 // Liste des anciens chemins WordPress à rediriger
-const wpRedirects = new Map([
-  ['/index.php', '/'],
-  ['/wp-content/uploads', '/images'],
-  ['/category', '/categories'],
-  ['/tag', '/tags'],
-  ['/author', '/team'],
-]);
+const wpRedirects = [
+  { oldPath: '/index.php', newPath: '/' },
+  { oldPath: '/wp-content/uploads', newPath: '/images' },
+  { oldPath: '/category', newPath: '/categories' },
+  { oldPath: '/tag', newPath: '/tags' },
+  { oldPath: '/author', newPath: '/team' },
+];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -21,9 +21,9 @@ export async function middleware(request: NextRequest) {
   }
 
   // Gestion des redirections WordPress
-  for (const [oldPath, newPath] of wpRedirects.entries()) {
-    if (pathname.startsWith(oldPath)) {
-      const newUrl = pathname.replace(oldPath, newPath);
+  for (const redirect of wpRedirects) {
+    if (pathname.startsWith(redirect.oldPath)) {
+      const newUrl = pathname.replace(redirect.oldPath, redirect.newPath);
       return NextResponse.redirect(new URL(newUrl, request.url), {
         status: 301
       });
