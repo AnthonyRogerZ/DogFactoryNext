@@ -8,11 +8,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://dogfactory.fr'),
-  title: 'Dog Factory - Salon de toilettage à Genas',
-  description: 'Salon de toilettage professionnel à Genas. Prenez rendez-vous pour le bien-être de votre compagnon.',
+  title: 'Dog Factory - Salon de toilettage à Vaux-le-Pénil',
+  description: 'Salon de toilettage professionnel à Vaux-le-Pénil. Prenez rendez-vous pour le bien-être de votre compagnon.',
   openGraph: {
-    title: 'Dog Factory - Salon de toilettage à Genas',
-    description: 'Salon de toilettage professionnel à Genas. Prenez rendez-vous pour le bien-être de votre compagnon.',
+    title: 'Dog Factory - Salon de toilettage à Vaux-le-Pénil',
+    description: 'Salon de toilettage professionnel à Vaux-le-Pénil. Prenez rendez-vous pour le bien-être de votre compagnon.',
     url: 'https://dogfactory.fr',
     siteName: 'Dog Factory',
     locale: 'fr_FR',
