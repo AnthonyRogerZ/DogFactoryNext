@@ -3,8 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const GA_TRACKING_ID = "G-WXE1QZPF64"; // Remplace par ton propre ID GA
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://dogfactory.fr'),
@@ -41,6 +44,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
+      <head>
+        {/* ✅ Ajout du Favicon */}
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+        {/* ✅ Google Analytics */}
+        <Script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_TRACKING_ID}');
+            `,
+          }}
+        />
+      </head>
       <body className={inter.className}>
         <div className="flex flex-col">
           <Header />
