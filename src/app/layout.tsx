@@ -12,10 +12,15 @@ const GA_TRACKING_ID = "G-WXE1QZPF64"; // Remplace par ton propre ID GA
 export const metadata: Metadata = {
   metadataBase: new URL('https://dogfactory.fr'),
   title: 'Dog Factory - Salon de toilettage à Vaux-le-Pénil',
-  description: 'Salon de toilettage professionnel à Vaux-le-Pénil. Prenez rendez-vous pour le bien-être de votre compagnon.',
+  description:
+    'Salon de toilettage professionnel à Vaux-le-Pénil. Prenez rendez-vous pour le bien-être de votre compagnon.',
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: {
     title: 'Dog Factory - Salon de toilettage à Vaux-le-Pénil',
-    description: 'Salon de toilettage professionnel à Vaux-le-Pénil. Prenez rendez-vous pour le bien-être de votre compagnon.',
+    description:
+      'Salon de toilettage professionnel à Vaux-le-Pénil. Prenez rendez-vous pour le bien-être de votre compagnon.',
     url: 'https://dogfactory.fr',
     siteName: 'Dog Factory',
     locale: 'fr_FR',
@@ -45,11 +50,11 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
-        {/* ✅ Ajout du Favicon */}
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
-        {/* ✅ Google Analytics */}
-        <Script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
+        {/* Les scripts de Google Analytics se chargent ici */}
+        <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+        />
         <Script
           id="google-analytics"
           strategy="afterInteractive"
