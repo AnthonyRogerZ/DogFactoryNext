@@ -64,8 +64,9 @@ export default function RootLayout({
               gtag('js', new Date());
               gtag('config', '${GA_TRACKING_ID}', {
                 page_path: window.location.pathname,
-                transport_url: 'https://www.google-analytics.com/g/collect',
-                send_page_view: true
+                transport_type: 'beacon',
+                send_page_view: true,
+                cookie_flags: 'SameSite=None;Secure'
               });
             `,
           }}

@@ -433,7 +433,7 @@ export default function Prestations() {
                 spaceBetween={12}
                 slidesPerView={1.2}
                 centeredSlides={true}
-                loop={true}
+                loop={reviews.length > 3}
                 navigation={{
                   prevEl: '.swiper-button-prev',
                   nextEl: '.swiper-button-next',
