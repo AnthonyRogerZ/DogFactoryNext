@@ -16,9 +16,8 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; img-src * data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://tagmanager.google.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'",
+              "default-src 'self'; img-src * data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com; script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com",
           },
-          
           {
             key: 'X-Frame-Options',
             value: 'DENY',

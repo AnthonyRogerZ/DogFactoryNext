@@ -50,20 +50,23 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
-        {/* Les scripts de Google Analytics se chargent ici */}
         <Script
-          async
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+          strategy="afterInteractive"
+          nonce="ga-script"
         />
         <Script
           id="google-analytics"
           strategy="afterInteractive"
+          nonce="ga-inline"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${GA_TRACKING_ID}');
+              gtag('config', '${GA_TRACKING_ID}', {
+                page_path: window.location.pathname,
+              });
             `,
           }}
         />
