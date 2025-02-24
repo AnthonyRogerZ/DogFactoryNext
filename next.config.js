@@ -7,7 +7,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/(.*)', 
+        source: '/(.*)',
         headers: [
           {
             key: 'Strict-Transport-Security',
@@ -65,16 +65,30 @@ const nextConfig = {
         destination: '/team/:slug',
         permanent: true,
       },
-      { source: "/ou-nous-trouver/", destination: "/nous-trouver/", permanent: true },
-      { source: "/conditions-generales-de-vente/", destination: "/cgv/", permanent: true },
+      {
+        source: '/ou-nous-trouver/',
+        destination: '/nous-trouver/',
+        permanent: true,
+      },
+      {
+        source: '/conditions-generales-de-vente/',
+        destination: '/cgv/',
+        permanent: true,
+      },
+      // Nouvelle redirection pour /contactez-nous
+      {
+        source: '/contactez-nous',
+        destination: '/contact',
+        permanent: true,
+      },
     ];
   },
   output: 'standalone',
   // Optimisations SEO
   poweredByHeader: false, // Supprime l'en-tête X-Powered-By
-  compress: true, // Active la compression Gzip
+  compress: true,         // Active la compression Gzip
   reactStrictMode: true,
-  swcMinify: true, // Utilise SWC pour la minification
+  swcMinify: true,        // Utilise SWC pour la minification
 };
 
 module.exports = nextConfig;
