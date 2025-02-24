@@ -42,7 +42,7 @@ export async function middleware(request: NextRequest) {
 
   // Headers de sécurité et SEO
   response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
-  response.headers.set('Content-Security-Policy', "default-src 'self'; img-src * data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com; font-src 'self' data:; frame-src 'self' https://www.google.com; style-src 'self' 'unsafe-inline';");
+  response.headers.set('Content-Security-Policy', "default-src 'self'; img-src * data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.google.com https://*.gstatic.com https://*.googletagmanager.com https://*.google-analytics.com; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; connect-src 'self' https://*.google-analytics.com https://*.googletagmanager.com https://*.google.com");
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
