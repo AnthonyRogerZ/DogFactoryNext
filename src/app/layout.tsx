@@ -53,12 +53,10 @@ export default function RootLayout({
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
           strategy="afterInteractive"
-          nonce="ga-script"
         />
         <Script
           id="google-analytics"
           strategy="afterInteractive"
-          nonce="ga-inline"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -66,6 +64,8 @@ export default function RootLayout({
               gtag('js', new Date());
               gtag('config', '${GA_TRACKING_ID}', {
                 page_path: window.location.pathname,
+                transport_url: 'https://www.google-analytics.com/g/collect',
+                send_page_view: true
               });
             `,
           }}
