@@ -499,8 +499,8 @@ export default function Prestations() {
               </Swiper>
               
               {/* Navigation Buttons */}
-              <div className="swiper-button-prev !hidden md:!flex !text-brand hover:!text-brand/80 after:!text-xl !w-8 !h-8 !bg-white/90 !rounded-full shadow-md -left-4 md:left-0"></div>
-              <div className="swiper-button-next !hidden md:!flex !text-brand hover:!text-brand/80 after:!text-xl !w-8 !h-8 !bg-white/90 !rounded-full shadow-md -right-4 md:right-0"></div>
+              <div className="swiper-button-prev !hidden md:!flex !text-brand hover:!text-brand/80 after:!content-['prev'] !w-8 !h-8 !bg-white/90 !rounded-full shadow-md -left-4 md:left-0"></div>
+              <div className="swiper-button-next !hidden md:!flex !text-brand hover:!text-brand/80 after:!content-['next'] !w-8 !h-8 !bg-white/90 !rounded-full shadow-md -right-4 md:right-0"></div>
               
               {/* Pagination */}
               <div className="swiper-pagination !bottom-0 !pt-4"></div>

@@ -62,10 +62,14 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
+              gtag('consent', 'default', {
+                'analytics_storage': 'granted'
+              });
               gtag('config', '${GA_TRACKING_ID}', {
                 page_path: window.location.pathname,
                 transport_type: 'beacon',
                 send_page_view: true,
+                cookie_domain: 'dogfactory.fr',
                 cookie_flags: 'SameSite=None;Secure'
               });
             `,
