@@ -2,7 +2,10 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { FaPaw, FaHeart, FaCut, FaShower, FaCheck, FaStar, FaGoogle, FaMapMarkerAlt, FaPhone, FaUser } from 'react-icons/fa'
+import { 
+  FaPaw, FaHeart, FaCut, FaShower, FaCheck, FaStar, FaGoogle, 
+  FaMapMarkerAlt, FaPhone, FaUser 
+} from 'react-icons/fa'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
@@ -43,21 +46,15 @@ export default function Prestations() {
       try {
         const response = await fetch('/api/google-reviews')
         const text = await response.text()
-        console.log('Raw API Response:', text)
-        
         if (!response.ok) {
           throw new Error(`Failed to fetch reviews: ${response.status} ${text}`)
         }
-        
         const data = JSON.parse(text)
-        console.log('Parsed reviews:', data)
-        
         if (data.reviews && data.reviews.length > 0) {
           setGoogleReviews(data.reviews)
           setReviews(data.reviews)
         } else {
-          console.log('No Google reviews available, using mock reviews')
-          // Fallback to mock reviews only if no Google reviews are available
+          // Fallback aux avis mock si aucun avis Google n'est disponible
           const mockReviews: GoogleReview[] = [
             {
               author_name: "Marie Dupont",
@@ -80,11 +77,10 @@ export default function Prestations() {
               time: new Date().getTime(),
               profile_photo_url: "/images/reviews/avatar3.jpg"
             }
-          ];
-          setReviews(mockReviews);
+          ]
+          setReviews(mockReviews)
         }
-      } catch (error) {
-        console.error('Error fetching reviews:', error)
+      } catch (error: any) {
         setError(error.message)
       } finally {
         setLoading(false)
@@ -92,6 +88,10 @@ export default function Prestations() {
     }
 
     fetchReviews()
+
+    // Optionnel : pour rafraîchir les avis toutes les 5 minutes
+    const intervalId = setInterval(fetchReviews, 300000)
+    return () => clearInterval(intervalId)
   }, [])
 
   if (!mounted) return null
@@ -239,7 +239,7 @@ export default function Prestations() {
                     <span>Bain et Séchage</span>
                   </h2>
                   <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  Offrez à votre compagnon à quatre pattes un bain relaxant et un séchage doux pour un pelage propre et soyeux. Ce soin est idéal pour rafraîchir votre animal entre deux toilettages complets.
+                    Offrez à votre compagnon à quatre pattes un bain relaxant et un séchage doux pour un pelage propre et soyeux. Ce soin est idéal pour rafraîchir votre animal entre deux toilettages complets.
                   </p>
                   <div className="mt-4 flex flex-col items-center space-y-2">
                     <Badge>Douceur garantie</Badge>
@@ -280,8 +280,7 @@ export default function Prestations() {
                       Nous utilisons des produits respectueux pour offrir à votre compagnon un soin de qualité.
                     </p>
                     <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                      Grâce à nos techniques de séchage doux et à des soins personnalisés, votre chien bénéficiera 
-                      d'un pelage propre, soyeux et délicatement parfumé.
+                      Grâce à nos techniques de séchage doux et à des soins personnalisés, votre chien bénéficiera d'un pelage propre, soyeux et délicatement parfumé.
                     </p>
                   </div>
                   <div className="mt-4 space-y-2">
@@ -333,17 +332,19 @@ export default function Prestations() {
                   </h2>
                   <div className="space-y-3">
                     <div className="p-3 md:p-4 bg-gray-50 rounded-xl">
-                      <h3 className="text-base md:text-lg font-semibold mb-2 text-gray-900">Épilation pour races à poils durs</h3>
+                      <h3 className="text-base md:text-lg font-semibold mb-2 text-gray-900">
+                        Épilation pour races à poils durs
+                      </h3>
                       <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                        Cette méthode est idéale pour préserver la texture naturelle et la qualité du pelage 
-                        des races nécessitant ce soin spécifique.
+                        Cette méthode est idéale pour préserver la texture naturelle et la qualité du pelage des races nécessitant ce soin spécifique.
                       </p>
                     </div>
                     <div className="p-3 md:p-4 bg-gray-50 rounded-xl">
-                      <h3 className="text-base md:text-lg font-semibold mb-2 text-gray-900">Épilation manuelle</h3>
+                      <h3 className="text-base md:text-lg font-semibold mb-2 text-gray-900">
+                        Épilation manuelle
+                      </h3>
                       <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                        Adaptée aux races qui demandent un entretien particulier, elle garantit le confort 
-                        de votre chien tout en maintenant la santé et l'équilibre de son pelage.
+                        Adaptée aux races qui demandent un entretien particulier, elle garantit le confort de votre chien tout en maintenant la santé et l'équilibre de son pelage.
                       </p>
                     </div>
                   </div>

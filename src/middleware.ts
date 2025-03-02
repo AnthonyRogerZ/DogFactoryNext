@@ -16,9 +16,12 @@ export async function middleware(request: NextRequest) {
   console.log('Middleware - URL:', pathname);
 
   // Redirection HTTPS
-  if (request.headers.get('x-forwarded-proto') !== 'https') {
-    return NextResponse.redirect(new URL(request.url.replace('http://', 'https://')));
-  }
+ // Redirection HTTPS (Désactivée en mode développement)
+if (process.env.NODE_ENV !== 'development' && request.headers.get('x-forwarded-proto') !== 'https') {
+  return NextResponse.redirect(new URL(request.url.replace('http://', 'https://')));
+}
+
+console.log('NODE_ENV:', process.env.NODE_ENV);
 
   // Gestion des redirections WordPress
   for (const redirect of wpRedirects) {
