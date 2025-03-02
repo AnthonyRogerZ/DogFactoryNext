@@ -4,6 +4,46 @@ import { motion } from 'framer-motion'
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaBus, FaCar, FaParking, FaExclamation } from 'react-icons/fa'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import Head from 'next/head'
+
+// export const metadata = {
+//   title: 'Où Nous Trouver - Dog Factory',
+//   description: 'Retrouvez notre salon de toilettage canin à Vaux-le-Pénil. Accès facile en transport en commun, voiture ou parking gratuit.',
+// };
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Dog Factory",
+  "image": "https://dogfactory.fr/images/logo.png",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "79 Rue de la Baste",
+    "addressLocality": "Vaux-le-Pénil",
+    "postalCode": "77000",
+    "addressCountry": "FR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "48.5288056",
+    "longitude": "2.6753789"
+  },
+  "url": "https://dogfactory.fr",
+  "telephone": "+33 1 23 45 67 89",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "opens": "09:00",
+    "closes": "18:30"
+  }
+};
 
 export default function Location() {
   const [isOpen, setIsOpen] = useState(false)
@@ -46,6 +86,13 @@ export default function Location() {
 
   return (
     <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          suppressHydrationWarning
+        />
+      </Head>
       <main className="min-h-screen bg-gray-50 pt-16 md:pt-20">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-b from-brand/5 to-transparent py-6 md:py-8">
@@ -182,21 +229,23 @@ export default function Location() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          <a
-                            href="waze://?ll=48.5219,2.6653&navigate=yes"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-                          >
-                            <div className="w-6 h-6 flex-shrink-0">
-                              <img 
-                                src="/images/waze/icons8-waze-48.png" 
-                                alt="Waze" 
-                                className="w-full h-full object-contain"
-                              />
-                            </div>
-                            <span className="whitespace-nowrap">Waze</span>
-                          </a>
+<a
+  href="https://www.waze.com/ul?ll=48.52010657890046,2.6743313992063587&navigate=yes"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+>
+  <div className="w-6 h-6 flex-shrink-0">
+    <img 
+      src="/images/waze/icons8-waze-48.png" 
+      alt="Waze" 
+      className="w-full h-full object-contain"
+    />
+  </div>
+  <span className="whitespace-nowrap">Waze</span>
+</a>
+
+
                         </motion.div>
                       </div>
                     </div>

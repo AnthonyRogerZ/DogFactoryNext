@@ -24,40 +24,52 @@ interface BeforeAfterImage {
 }
 
 const salonImages = [
-  '/images/salon/optimized_image_2.jpg',
-  '/images/salon/optimized_image_3.jpg',
-  '/images/salon/optimized_image_4.jpg',
-  '/images/salon/optimized_image_5.jpg',
-  '/images/salon/optimized_image_6.jpg',
-  '/images/salon/optimized_image_7.jpg',
-  '/images/salon/optimized_image_8.jpg',
-  '/images/salon/optimized_image_9.jpg',
-  '/images/salon/optimized_image_10.jpg',
-  '/images/salon/final_IMG_2586.jpg',
-  '/images/salon/final_IMG_2591.jpg'
+  { src: '/images/salon/optimized_image_2.jpg', alt: 'Salon de toilettage Dog Factory avant transformation' },
+  { src: '/images/salon/optimized_image_3.jpg', alt: 'Salon de toilettage Dog Factory après transformation' },
+  { src: '/images/salon/optimized_image_4.jpg', alt: 'Salon de toilettage Dog Factory avec un chien heureux' },
+  { src: '/images/salon/optimized_image_5.jpg', alt: 'Salon de toilettage Dog Factory avec un chien en train de jouer' },
+  { src: '/images/salon/optimized_image_6.jpg', alt: 'Salon de toilettage Dog Factory avec un chien qui se repose' },
+  { src: '/images/salon/optimized_image_7.jpg', alt: 'Salon de toilettage Dog Factory avec un chien qui se fait toiletté' },
+  { src: '/images/salon/optimized_image_8.jpg', alt: 'Salon de toilettage Dog Factory avec un chien qui se fait coiffer' },
+  { src: '/images/salon/optimized_image_9.jpg', alt: 'Salon de toilettage Dog Factory avec un chien qui se fait baigner' },
+  { src: '/images/salon/optimized_image_10.jpg', alt: 'Salon de toilettage Dog Factory avec un chien qui se fait sécher' },
+  { src: '/images/salon/final_IMG_2586.jpg', alt: 'Salon de toilettage Dog Factory avec un chien heureux après son toilettage' },
+  { src: '/images/salon/final_IMG_2591.jpg', alt: 'Salon de toilettage Dog Factory avec un chien qui se fait admirer' }
 ];
+
+const metadata = {
+  title: 'Galerie - Dog Factory | Salon de toilettage canin',
+  description: 'Découvrez notre galerie de photos du salon Dog Factory, spécialisé dans le toilettage canin à Paris. Admirez les transformations de nos amis à quatre pattes.',
+};
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImagePair, setCurrentImagePair] = useState<{ before: string; after: string } | null>(null);
   const [isBeforeImage, setIsBeforeImage] = useState(true);
   const [beforeAfterPhotos, setBeforeAfterPhotos] = useState<BeforeAfterImage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
         const response = await fetch('/api/admin/photos');
         const data = await response.json();
-        console.log('Photos chargées:', data);
         if (data.success) {
           setBeforeAfterPhotos(data.photos);
         }
-      } catch (error) {
-        console.error('Erreur lors du chargement des photos:', error);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPhotos();
+
+    // Rafraîchissement automatique toutes les 5 minutes (300000 ms)
+    const intervalId = setInterval(fetchPhotos, 300000);
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleImageClick = (photo: BeforeAfterImage, isBeforePhoto: boolean) => {
@@ -93,27 +105,13 @@ export default function Gallery() {
               <motion.div 
                 className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-brand/20 to-brand/5 rounded-full flex items-center justify-center mx-auto relative overflow-hidden"
                 whileHover={{ scale: 1.05 }}
-                animate={{
-                  rotate: [0, 5, -5, 0],
-                }}
-                transition={{
-                  rotate: {
-                    repeat: Infinity,
-                    duration: 4,
-                    ease: "easeInOut"
-                  }
-                }}
+                animate={{ rotate: [0, 5, -5, 0] }}
+                transition={{ rotate: { repeat: Infinity, duration: 4, ease: "easeInOut" } }}
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-brand/20 to-transparent"
-                  animate={{
-                    rotate: [0, 180, 360],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
+                  animate={{ rotate: [0, 180, 360] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 />
                 <div className="relative z-10">
                   <div className="flex items-center justify-center space-x-2">
@@ -149,14 +147,8 @@ export default function Gallery() {
                 </div>
                 <motion.div
                   className="absolute -inset-1 bg-gradient-to-r from-brand/10 to-transparent"
-                  animate={{
-                    rotate: [360, 180, 0],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
+                  animate={{ rotate: [360, 180, 0] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 />
               </motion.div>
               <div className="absolute -inset-4 bg-brand/5 rounded-full blur-xl" />
@@ -231,11 +223,11 @@ export default function Gallery() {
                 <SwiperSlide key={index} className="max-w-2xl">
                   <div className="relative w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-lg">
                     <Image
-                      src={image}
-                      alt={`Photo du salon ${index + 1}`}
+                      src={image.src}
+                      alt={image.alt}
                       fill
-                      className="object-cover"
-                      onClick={() => setSelectedImage(image)}
+                      className="object-cover rounded-lg"
+                      onClick={() => setSelectedImage(image.src)}
                       unoptimized
                     />
                   </div>
@@ -263,53 +255,59 @@ export default function Gallery() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {beforeAfterPhotos.map((photo) => (
-              <motion.div
-                key={photo.id}
-                className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 hover:border-brand/20 group"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="grid grid-cols-2 gap-3 p-3">
-                  <div className="relative w-full h-[200px] md:h-[300px] rounded-xl overflow-hidden">
-                    <Image
-                      src={photo.before}
-                      alt="Avant"
-                      fill
-                      className="object-cover transform transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      priority
-                      onClick={() => handleImageClick(photo, true)}
-                      unoptimized
-                    />
-                    <div className="absolute top-2 left-2 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-xs font-medium shadow-sm">
-                      Avant
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <p className="text-gray-600">Chargement des photos...</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              {beforeAfterPhotos.map((photo) => (
+                <motion.div
+                  key={photo.id}
+                  className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 hover:border-brand/20 group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <div className="grid grid-cols-2 gap-3 p-3">
+                    <div className="relative w-full h-[200px] md:h-[300px] rounded-xl overflow-hidden">
+                      <Image
+                        src={photo.before}
+                        alt="Avant"
+                        fill
+                        className="object-cover transform transition-transform duration-300 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority
+                        onClick={() => handleImageClick(photo, true)}
+                        unoptimized
+                      />
+                      <div className="absolute top-2 left-2 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-xs font-medium shadow-sm">
+                        Avant
+                      </div>
+                    </div>
+                    <div className="relative w-full h-[200px] md:h-[300px] rounded-xl overflow-hidden">
+                      <Image
+                        src={photo.after}
+                        alt="Après"
+                        fill
+                        className="object-cover transform transition-transform duration-300 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority
+                        onClick={() => handleImageClick(photo, false)}
+                        unoptimized
+                      />
+                      <div className="absolute top-2 right-2 px-3 py-1 bg-brand/90 backdrop-blur-sm text-white rounded-lg text-xs font-medium shadow-sm">
+                        Après
+                      </div>
                     </div>
                   </div>
-                  <div className="relative w-full h-[200px] md:h-[300px] rounded-xl overflow-hidden">
-                    <Image
-                      src={photo.after}
-                      alt="Après"
-                      fill
-                      className="object-cover transform transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      priority
-                      onClick={() => handleImageClick(photo, false)}
-                      unoptimized
-                    />
-                    <div className="absolute top-2 right-2 px-3 py-1 bg-brand/90 backdrop-blur-sm text-white rounded-lg text-xs font-medium shadow-sm">
-                      Après
-                    </div>
+                  <div className="p-4 border-t border-gray-100 bg-gradient-to-b from-gray-50/50 to-white">
+                    <p className="text-sm text-gray-500 text-center">{photo.description}</p>
                   </div>
-                </div>
-                <div className="p-4 border-t border-gray-100 bg-gradient-to-b from-gray-50/50 to-white">
-                  <p className="text-sm text-gray-500 text-center">{photo.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
 
           {/* Call to Action Section */}
           <motion.div
@@ -368,6 +366,20 @@ export default function Gallery() {
           </div>
         </div>
       )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ImageGallery",
+            "name": "Galerie de photos de Dog Factory",
+            "description": "Découvrez les photos de notre salon de toilettage pour chiens",
+            "image": [
+              ...salonImages.map((image) => ({ "@type": "ImageObject", "url": image.src, "alt": image.alt }))
+            ]
+          })
+        }}
+      />
     </div>
   );
 }

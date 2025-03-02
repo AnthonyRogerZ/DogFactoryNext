@@ -1,7 +1,9 @@
-'use client'
+'use client';
+
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import '@/app/globals.css'
 import { 
   FaPaw, FaHeart, FaCut, FaShower, FaCheck, FaStar, FaGoogle, 
   FaMapMarkerAlt, FaPhone, FaUser 
